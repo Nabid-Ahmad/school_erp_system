@@ -32,4 +32,4 @@ A professional, lavender-themed School ERP system built with Laravel.
 
 ---
 
-Developed with ❤️ by Antigravity AI Assistant.
+
