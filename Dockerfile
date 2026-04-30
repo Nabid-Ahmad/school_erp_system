@@ -28,8 +28,18 @@ WORKDIR /var/www/html
 # Copy existing application directory contents
 COPY . /var/www/html
 
+# Ensure database directory exists and create SQLite file EARLY
+RUN mkdir -p /var/www/html/database && \
+    touch /var/www/html/database/database.sqlite && \
+    chown -R www-data:www-data /var/www/html/database && \
+    chmod -R 775 /var/www/html/database
+
 # Change Apache DocumentRoot to Laravel's public directory
 RUN sed -i -e 's/html/html\/public/g' /etc/apache2/sites-available/000-default.conf
+
+# Set environment variables for build time
+ENV DB_CONNECTION=sqlite
+ENV DB_DATABASE=/var/www/html/database/database.sqlite
 
 # Install Composer and NPM dependencies
 RUN composer install --optimize-autoloader --no-dev
@@ -44,11 +54,6 @@ RUN php artisan config:clear && \
 # Set Permissions for Laravel
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
-
-# Create SQLite database file if it doesn't exist
-RUN touch /var/www/html/database/database.sqlite
-RUN chown www-data:www-data /var/www/html/database/database.sqlite
-RUN chmod 775 /var/www/html/database/database.sqlite
 
 # Expose port 80
 EXPOSE 80
