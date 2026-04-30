@@ -25,11 +25,6 @@ A professional, lavender-themed School ERP system built with Laravel.
 - **Frontend:** HTML5, CSS3, JavaScript (Vite)
 - **Database:** MySQL (Local) / SQLite (Production)
 - **Deployment:** Render (Docker)
-
-## 🔑 Login Credentials (Demo)
-- **Email:** `admin@school.com`
-- **Password:** `password`
-
 ---
 
 
