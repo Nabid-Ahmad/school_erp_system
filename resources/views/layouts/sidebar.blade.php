@@ -1,4 +1,8 @@
-<aside class="w-64 bg-purple-600 text-white flex-shrink-0 hidden sm:block min-h-screen shadow-2xl z-20 relative">
+<!-- Mobile Overlay -->
+<div x-show="sidebarOpen" x-transition.opacity class="fixed inset-0 bg-gray-900/50 z-20 sm:hidden" @click="sidebarOpen = false" style="display: none;"></div>
+
+<aside :class="{'translate-x-0': sidebarOpen, '-translate-x-full': !sidebarOpen}" 
+       class="w-64 bg-purple-600 text-white flex-shrink-0 min-h-screen shadow-2xl z-30 fixed sm:relative sm:translate-x-0 transition-transform duration-300 ease-in-out">
     <div class="p-6 border-b border-purple-500/50">
         <h2 class="text-2xl font-black font-sans tracking-tight drop-shadow-md">Bangla Model</h2>
         <span class="text-[10px] uppercase font-bold tracking-widest text-purple-200">Management System</span>
