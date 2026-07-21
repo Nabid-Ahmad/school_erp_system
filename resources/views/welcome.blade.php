@@ -27,6 +27,7 @@
                 }
             }
         </script>
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
         <style>
             @keyframes float {
@@ -83,7 +84,7 @@
             </script>
             @endif
 
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" x-data="{ mobileMenuOpen: false }">
                 <div class="flex justify-between h-20 items-center">
                     <div class="flex items-center gap-3 group cursor-pointer">
                         @if(isset($schoolSettings['school_logo']))
@@ -98,7 +99,9 @@
                             <span class="text-[10px] uppercase tracking-[0.2em] text-green-500 font-bold">Nature & Knowledge</span>
                         </div>
                     </div>
-                    <div class="flex items-center gap-8 text-sm font-bold uppercase tracking-wider">
+                    
+                    <!-- Desktop Menu -->
+                    <div class="hidden lg:flex items-center gap-8 text-sm font-bold uppercase tracking-wider">
                         <a href="#" class="text-deep-green hover:opacity-70 transition">Home</a>
                         <a href="#admission" class="text-gray-500 hover:text-deep-green transition">Admission</a>
                         <a href="#gallery" class="text-gray-500 hover:text-deep-green transition">Gallery</a>
@@ -112,6 +115,29 @@
                             @endauth
                         @endif
                     </div>
+
+                    <!-- Mobile Menu Button -->
+                    <div class="lg:hidden flex items-center">
+                        <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-deep-green focus:outline-none">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Dropdown -->
+                <div x-show="mobileMenuOpen" x-transition style="display: none;" class="lg:hidden absolute top-20 left-0 w-full bg-white shadow-xl border-t border-green-100 flex flex-col px-6 py-4 space-y-4 font-bold text-sm uppercase tracking-wider z-50">
+                    <a href="#" @click="mobileMenuOpen = false" class="block text-deep-green hover:opacity-70 transition">Home</a>
+                    <a href="#admission" @click="mobileMenuOpen = false" class="block text-gray-500 hover:text-deep-green transition">Admission</a>
+                    <a href="#gallery" @click="mobileMenuOpen = false" class="block text-gray-500 hover:text-deep-green transition">Gallery</a>
+                    <a href="#events" @click="mobileMenuOpen = false" class="block text-gray-500 hover:text-deep-green transition">Events</a>
+                    <a href="#contact" @click="mobileMenuOpen = false" class="block text-gray-500 hover:text-deep-green transition">Contact Us</a>
+                    @if (Route::has('login'))
+                        @auth
+                            <a href="{{ url('/dashboard') }}" class="inline-block bg-deep-green text-white px-6 py-2 rounded-full shadow-lg hover:bg-green-800 transition text-center mt-2">Dashboard</a>
+                        @else
+                            <a href="{{ route('login') }}" class="inline-block bg-deep-green text-white px-6 py-2 rounded-full shadow-lg hover:bg-green-800 transition text-center mt-2">Staff Login</a>
+                        @endauth
+                    @endif
                 </div>
             </div>
         </nav>
