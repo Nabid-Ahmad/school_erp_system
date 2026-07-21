@@ -4,7 +4,7 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Manage Gallery') }}
             </h2>
-            <a href="{{ route('galleries.create') }}" class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-bold shadow-md hover:bg-blue-700 transition">
+            <a href="{{ route('galleries.create') }}" class="bg-purple-600 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-md hover:bg-purple-700 transition">
                 + Add Image
             </a>
         </div>

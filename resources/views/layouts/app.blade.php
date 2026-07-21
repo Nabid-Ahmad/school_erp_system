@@ -12,7 +12,23 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            'light-green': '#f0fdf4',
+                            'deep-green': '#15803d',
+                            'primary': '#2563EB',
+                            'success': '#22C55E',
+                            'warning': '#EAB308',
+                            'danger': '#EF4444',
+                        }
+                    }
+                }
+            }
+        </script>
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 flex">
