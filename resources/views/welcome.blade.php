@@ -10,8 +10,24 @@
         <link href="https://fonts.bunny.net/css?family=outfit:400,600,800|playfair-display:700" rel="stylesheet" />
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-        
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            'light-green': '#f0fdf4',
+                            'deep-green': '#15803d',
+                            'primary': '#2563EB',
+                            'success': '#22C55E',
+                            'warning': '#EAB308',
+                            'danger': '#EF4444',
+                        }
+                    }
+                }
+            }
+        </script>
+
         <style>
             @keyframes float {
                 0% { transform: translateY(0px); }

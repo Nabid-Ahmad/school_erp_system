@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     $galleries = \App\Models\Gallery::latest()->take(6)->get();
-    $events = \App\Models\Event::where('date', '>=', now())->orderBy('date', 'asc')->take(4)->get();
+    $events = \App\Models\Event::latest()->take(4)->get();
     return view('welcome', compact('galleries', 'events'));
 });
 
