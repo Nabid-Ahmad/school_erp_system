@@ -19,8 +19,22 @@ class ContactController extends Controller
             'message' => 'required|string',
         ]);
 
-        // Replace with your actual admin email
-        $adminEmail = env('MAIL_FROM_ADDRESS', 'admin@example.com');
+        // Hardcoded SMTP Configuration as requested
+        config([
+            'mail.default' => 'smtp',
+            'mail.mailers.smtp.host' => 'smtp.gmail.com',
+            'mail.mailers.smtp.port' => 587,
+            'mail.mailers.smtp.encryption' => 'tls',
+            'mail.mailers.smtp.username' => 'nabidahmad.zidan@gmail.com',
+            'mail.mailers.smtp.password' => 'bcjj mwgp jiou eepd',
+            'mail.from.address' => 'nabidahmad.zidan@gmail.com',
+            'mail.from.name' => 'School ERP',
+        ]);
+
+        $adminEmail = \App\Models\Setting::where('key', 'school_email')->value('value');
+        if (!$adminEmail) {
+            $adminEmail = 'nabidahmad.zidan@gmail.com'; // Fallback
+        }
 
         try {
             Mail::to($adminEmail)->send(new ContactUsMail($validated));
