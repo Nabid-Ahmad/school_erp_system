@@ -23,7 +23,7 @@ echo "Running migrations..."
 php artisan migrate --force
 
 echo "Linking storage..."
-php artisan storage:link
+php artisan storage:link --relative
 
 echo "Seeding database..."
 # Uncomment the line below if you want to seed the database on every deploy
