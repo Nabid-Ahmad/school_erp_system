@@ -21,7 +21,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 @forelse($galleries as $gallery)
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl border border-gray-100 relative group">
-                        <img src="{{ asset('storage/' . $gallery->image) }}" class="w-full h-48 object-cover" alt="{{ $gallery->title }}">
+                        <img src="{{ filter_var($gallery->image, FILTER_VALIDATE_URL) ? $gallery->image : asset('storage/' . $gallery->image) }}" class="w-full h-48 object-cover" alt="{{ $gallery->title }}">
                         <div class="p-4">
                             <h3 class="font-bold text-gray-800 truncate">{{ $gallery->title }}</h3>
                         </div>

@@ -88,7 +88,7 @@
                 <div class="flex justify-between h-20 items-center">
                     <a href="#" class="flex items-center gap-3 group cursor-pointer">
                         @if(isset($schoolSettings['school_logo']))
-                            <img src="{{ asset('storage/'.$schoolSettings['school_logo']) }}" class="w-12 h-12 rounded-xl object-contain bg-white/50 p-1">
+                            <img src="{{ filter_var($schoolSettings['school_logo'] ?? '', FILTER_VALIDATE_URL) ? $schoolSettings['school_logo'] : asset('storage/'.($schoolSettings['school_logo'] ?? '')) }}" class="w-12 h-12 rounded-xl object-contain bg-white/50 p-1">
                         @else
                             <div class="w-12 h-12 bg-deep-green rounded-2xl flex items-center justify-center text-white font-black text-2xl shadow-lg group-hover:rotate-12 transition-transform">
                                 {{ substr($schoolSettings['school_name'] ?? 'B', 0, 1) }}
@@ -265,7 +265,7 @@
                     @forelse($galleries as $gallery)
                     <div class="reveal flex flex-col overflow-hidden rounded-3xl bg-white shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group cursor-pointer border border-gray-100">
                         <div class="relative overflow-hidden h-72">
-                            <img src="{{ asset('storage/' . $gallery->image) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out" alt="{{ $gallery->title }}">
+                            <img src="{{ filter_var($gallery->image, FILTER_VALIDATE_URL) ? $gallery->image : asset('storage/' . $gallery->image) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out" alt="{{ $gallery->title }}">
                             <div class="absolute inset-0 bg-deep-green/0 group-hover:bg-deep-green/10 transition-colors duration-300"></div>
                         </div>
                         <div class="p-6 relative bg-white transition-colors duration-300">
@@ -313,7 +313,7 @@
                             <div class="reveal overflow-hidden rounded-[2.5rem] shadow-xl hover:shadow-2xl transition group bg-white h-full flex flex-col">
                                 <div class="relative overflow-hidden h-72">
                                     @if($event->image)
-                                        <img src="{{ asset('storage/' . $event->image) }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="{{ $event->title }}">
+                                        <img src="{{ filter_var($event->image, FILTER_VALIDATE_URL) ? $event->image : asset('storage/' . $event->image) }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="{{ $event->title }}">
                                     @else
                                         <div class="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400 font-bold">Bangla Model Event</div>
                                     @endif
@@ -457,7 +457,7 @@
                     <div class="space-y-8">
                         <div class="flex items-center gap-4">
                             @if(isset($schoolSettings['school_logo']))
-                                <img src="{{ asset('storage/'.$schoolSettings['school_logo']) }}" class="w-16 h-16 rounded-[2rem] object-contain bg-white p-2">
+                                <img src="{{ filter_var($schoolSettings['school_logo'] ?? '', FILTER_VALIDATE_URL) ? $schoolSettings['school_logo'] : asset('storage/'.($schoolSettings['school_logo'] ?? '')) }}" class="w-16 h-16 rounded-[2rem] object-contain bg-white p-2">
                             @else
                                 <div class="w-16 h-16 bg-white rounded-[2rem] flex items-center justify-center text-deep-green font-black text-3xl shadow-2xl">
                                     {{ substr($schoolSettings['school_name'] ?? 'B', 0, 1) }}

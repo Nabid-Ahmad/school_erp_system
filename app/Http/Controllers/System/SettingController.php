@@ -21,7 +21,7 @@ class SettingController extends Controller
         $data = $request->except('_token');
 
         if ($request->hasFile('school_logo')) {
-            $path = $request->file('school_logo')->store('school', 'public');
+            $path = $request->file('school_logo')->storeOnCloudinary('school')->getSecurePath();
             Setting::where('key', 'school_logo')->update(['value' => $path]);
         }
 

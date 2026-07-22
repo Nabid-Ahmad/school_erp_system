@@ -22,7 +22,7 @@
                 @forelse($events as $event)
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-2xl border border-gray-100 flex flex-col md:flex-row">
                         @if($event->image)
-                            <img src="{{ asset('storage/' . $event->image) }}" class="w-full md:w-48 h-48 md:h-auto object-cover" alt="{{ $event->title }}">
+                            <img src="{{ filter_var($event->image, FILTER_VALIDATE_URL) ? $event->image : asset('storage/' . $event->image) }}" class="w-full md:w-48 h-48 md:h-auto object-cover" alt="{{ $event->title }}">
                         @else
                             <div class="w-full md:w-48 h-48 md:h-auto bg-gray-100 flex items-center justify-center text-gray-400">No Image</div>
                         @endif

@@ -28,7 +28,7 @@ use App\Http\Controllers\Controller;
              'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
          ]);
  
-         $imagePath = $request->file('image')->store('gallery', 'public');
+         $imagePath = $request->file('image')->storeOnCloudinary('gallery')->getSecurePath();
  
          Gallery::create([
              'title' => $request->title,
@@ -40,7 +40,7 @@ use App\Http\Controllers\Controller;
  
      public function destroy(Gallery $gallery)
      {
-         Storage::disk('public')->delete($gallery->image);
+         // Storage::disk('public')->delete($gallery->image);
          $gallery->delete();
          return redirect()->route('galleries.index')->with('success', 'Gallery image deleted.');
      }

@@ -19,7 +19,7 @@
                 <div class="flex flex-col md:flex-row items-center gap-10 relative z-10">
                     <div class="w-48 h-48 rounded-[2.5rem] overflow-hidden border-8 border-gray-50 shadow-xl">
                         @if($teacher->image)
-                            <img src="{{ asset('storage/'.$teacher->image) }}" class="w-full h-full object-cover">
+                            <img src="{{ filter_var($teacher->image, FILTER_VALIDATE_URL) ? $teacher->image : asset('storage/'.$teacher->image) }}" class="w-full h-full object-cover">
                         @else
                             <div class="w-full h-full bg-deep-green flex items-center justify-center text-white text-6xl font-black">
                                 {{ substr($teacher->name, 0, 1) }}

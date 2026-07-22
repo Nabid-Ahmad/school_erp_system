@@ -47,7 +47,7 @@
                                     <label class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2">School Logo</label>
                                     <div class="flex items-center gap-4">
                                         @if(isset($settings['school_logo']))
-                                            <img src="{{ asset('storage/'.$settings['school_logo']) }}" class="w-16 h-16 rounded-2xl object-contain bg-gray-50 p-2">
+                                            <img src="{{ filter_var($settings['school_logo'] ?? '', FILTER_VALIDATE_URL) ? $settings['school_logo'] : asset('storage/'.($settings['school_logo'] ?? '')) }}" class="w-16 h-16 rounded-2xl object-contain bg-gray-50 p-2">
                                         @endif
                                         <input type="file" name="school_logo" class="text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-black file:bg-primary/10 file:text-primary hover:file:bg-primary/20 cursor-pointer">
                                     </div>
