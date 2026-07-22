@@ -86,7 +86,7 @@
 
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" x-data="{ mobileMenuOpen: false }">
                 <div class="flex justify-between h-20 items-center">
-                    <div class="flex items-center gap-3 group cursor-pointer">
+                    <a href="#" class="flex items-center gap-3 group cursor-pointer">
                         @if(isset($schoolSettings['school_logo']))
                             <img src="{{ asset('storage/'.$schoolSettings['school_logo']) }}" class="w-12 h-12 rounded-xl object-contain bg-white/50 p-1">
                         @else
@@ -98,7 +98,7 @@
                             <span class="text-xl font-black text-deep-green tracking-tight leading-none uppercase">{{ $schoolSettings['school_name'] ?? 'Bangla Model' }}</span>
                             <span class="text-[10px] uppercase tracking-[0.2em] text-green-500 font-bold">Nature & Knowledge</span>
                         </div>
-                    </div>
+                    </a>
                     
                     <!-- Desktop Menu -->
                     <div class="hidden lg:flex items-center gap-8 text-sm font-bold uppercase tracking-wider">
@@ -111,7 +111,7 @@
                             @auth
                                 <a href="{{ url('/dashboard') }}" class="bg-deep-green text-white px-6 py-2 rounded-full shadow-lg hover:bg-green-800 transition">Dashboard</a>
                             @else
-                                <a href="{{ route('login') }}" class="bg-deep-green text-white px-6 py-2 rounded-full shadow-lg hover:bg-green-800 transition">Staff Login</a>
+                                <a href="{{ route('login') }}" class="bg-deep-green text-white px-6 py-2 rounded-full shadow-lg hover:bg-green-800 transition">Login</a>
                             @endauth
                         @endif
                     </div>
@@ -135,7 +135,7 @@
                         @auth
                             <a href="{{ url('/dashboard') }}" class="inline-block bg-deep-green text-white px-6 py-2 rounded-full shadow-lg hover:bg-green-800 transition text-center mt-2">Dashboard</a>
                         @else
-                            <a href="{{ route('login') }}" class="inline-block bg-deep-green text-white px-6 py-2 rounded-full shadow-lg hover:bg-green-800 transition text-center mt-2">Staff Login</a>
+                            <a href="{{ route('login') }}" class="inline-block bg-deep-green text-white px-6 py-2 rounded-full shadow-lg hover:bg-green-800 transition text-center mt-2">Login</a>
                         @endauth
                     @endif
                 </div>
@@ -143,16 +143,16 @@
         </nav>
 
         <!-- Hero Section -->
-        <section class="relative pt-40 pb-20 lg:pt-56 lg:pb-40 overflow-hidden bg-gradient-to-b from-green-100 to-light-green">
+        <section class="relative pt-32 pb-16 lg:pt-40 lg:pb-24 overflow-hidden bg-gradient-to-b from-green-100 to-light-green">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
                     <div class="reveal active">
                         <span class="inline-block px-5 py-2 bg-deep-green/10 text-deep-green text-xs font-black rounded-full mb-8 uppercase tracking-[0.3em]">Igniting Minds Since 1995</span>
-                        <h1 class="text-6xl lg:text-8xl font-black text-deep-green leading-[0.95] mb-8 font-['Playfair_Display']">
-                            Building <span class="italic text-green-400">Tomorrow's</span> Leaders, Today.
+                        <h1 class="text-6xl lg:text-[7.5rem] font-black text-deep-green leading-[0.95] mb-8 font-['Playfair_Display']">
+                            Nurturing <span class="italic text-green-400">Excellence</span>, Inspiring Tomorrow.
                         </h1>
-                        <p class="text-lg text-green-700/70 mb-12 leading-relaxed max-w-lg">
-                            We don’t just teach subjects; we inspire curiosity, foster creativity, and build character. Join our community where every child is a star.
+                        <p class="text-lg text-green-800/80 mb-12 leading-relaxed max-w-lg font-medium">
+                            We transcend traditional education to cultivate a dynamic environment where curiosity thrives, character is forged, and every student is empowered to reach their boundless potential. Discover the foundation for your child's brilliant future.
                         </p>
                         <div class="flex flex-wrap gap-6">
                             <a href="#contact" class="bg-deep-green text-white px-10 py-5 rounded-2xl font-bold text-lg hover:-translate-y-1 transition shadow-2xl">
@@ -185,7 +185,7 @@
         </section>
 
         <!-- Admission Section -->
-        <section id="admission" class="py-32 bg-gray-50/50 relative overflow-hidden">
+        <section id="admission" class="py-20 bg-gray-50/50 relative overflow-hidden">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
                     <!-- Left: Admission Details -->
@@ -255,7 +255,7 @@
         </section>
 
         <!-- Gallery Section -->
-        <section id="gallery" class="py-32 bg-white">
+        <section id="gallery" class="py-20 bg-[#f0fdf4]">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-20 reveal">
                     <h2 class="text-5xl font-black text-deep-green mb-4 font-['Playfair_Display'] italic">Our Gallery</h2>
@@ -263,14 +263,23 @@
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     @forelse($galleries as $gallery)
-                    <div class="reveal overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl transition group">
-                        <img src="{{ asset('storage/' . $gallery->image) }}" class="w-full h-80 object-cover group-hover:scale-110 transition duration-500" alt="{{ $gallery->title }}">
-                        <div class="p-6 bg-white">
-                            <h3 class="font-bold text-lg text-deep-green">{{ $gallery->title }}</h3>
+                    <div class="reveal flex flex-col overflow-hidden rounded-3xl bg-white shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group cursor-pointer border border-gray-100">
+                        <div class="relative overflow-hidden h-72">
+                            <img src="{{ asset('storage/' . $gallery->image) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out" alt="{{ $gallery->title }}">
+                            <div class="absolute inset-0 bg-deep-green/0 group-hover:bg-deep-green/10 transition-colors duration-300"></div>
+                        </div>
+                        <div class="p-6 relative bg-white transition-colors duration-300">
+                            <div class="w-12 h-1 bg-gray-200 group-hover:bg-deep-green transition-colors duration-300 mb-4 rounded-full"></div>
+                            <h3 class="font-black text-xl text-gray-800 group-hover:text-deep-green transition-colors duration-300 pr-8">{{ $gallery->title }}</h3>
+                            
+                            <!-- Arrow icon -->
+                            <div class="absolute bottom-6 right-6 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-deep-green">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                            </div>
                         </div>
                     </div>
                     @empty
-                    <div class="col-span-full py-12 text-center text-gray-400">Our memories are being uploaded...</div>
+                    <div class="col-span-full py-12 text-center text-gray-400 font-bold">Our memories are being uploaded...</div>
                     @endforelse
                 </div>
             </div>
@@ -281,14 +290,13 @@
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
         <!-- Events Section -->
-        <section id="events" class="py-32 bg-light-green overflow-hidden">
+        <section id="events" class="py-20 bg-light-green overflow-hidden border-t border-green-200/60">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between items-end mb-16 reveal">
-                    <div>
-                        <h2 class="text-5xl font-black text-deep-green font-['Playfair_Display'] italic">Our Events</h2>
-                        <p class="text-green-700/60 mt-4">Witness the joy and learning in our campus life.</p>
-                    </div>
-                    <div class="flex gap-4">
+                <div class="text-center mb-20 reveal relative">
+                    <h2 class="text-5xl font-black text-deep-green font-['Playfair_Display'] italic mb-4">Our Events</h2>
+                    <p class="text-gray-500 max-w-2xl mx-auto">Witness the joy and learning in our campus life.</p>
+                    
+                    <div class="hidden md:flex gap-4 absolute right-0 bottom-0">
                         <button class="swiper-prev w-12 h-12 rounded-full border-2 border-deep-green flex items-center justify-center text-deep-green hover:bg-deep-green hover:text-white transition cursor-pointer">
                             &larr;
                         </button>
@@ -351,60 +359,82 @@
         </script>
 
         <!-- Contact Us Section -->
-        <section id="contact" class="py-32 bg-white">
+        <section id="contact" class="py-20 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="bg-deep-green rounded-[4rem] p-12 lg:p-24 text-white reveal overflow-hidden relative">
-                    <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/leaf.png')]"></div>
-                    <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-20">
+                <div class="bg-gradient-to-br from-deep-green to-green-900 rounded-[4rem] p-8 lg:p-16 text-white reveal overflow-hidden relative shadow-2xl">
+                    <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/leaf.png')] mix-blend-overlay"></div>
+                    
+                    <!-- Decorative Elements -->
+                    <div class="absolute -top-24 -right-24 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
+                    <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-green-500/20 rounded-full blur-3xl"></div>
+
+                    <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
                         <div>
-                            <h2 class="text-5xl font-black mb-8 font-['Playfair_Display'] italic">Contact Us</h2>
-                            <p class="text-green-100 text-lg mb-12">Have questions? We're here to help you navigate your child's educational journey.</p>
-                            <div class="space-y-6">
-                                <div class="flex gap-4 items-center">
-                                    <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center">📍</div>
-                                    <span class="font-bold">{{ $schoolSettings['school_address'] ?? '123 School Road, Dhaka, Bangladesh' }}</span>
+                            <span class="inline-block py-1 px-3 rounded-full bg-white/10 border border-white/20 text-xs font-bold tracking-widest uppercase mb-4 backdrop-blur-md">Get in Touch</span>
+                            <h2 class="text-4xl lg:text-5xl font-black mb-6 font-['Playfair_Display'] italic leading-tight">We'd Love to <br>Hear From You</h2>
+                            <p class="text-green-100/80 text-base mb-8 max-w-md leading-relaxed">Have questions? We're here to help you navigate your child's educational journey with care and excellence.</p>
+                            
+                            <div class="space-y-4">
+                                <div class="group flex gap-5 items-center p-3 -ml-3 rounded-2xl hover:bg-white/5 transition-all duration-300 cursor-pointer">
+                                    <div class="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center text-xl group-hover:bg-white group-hover:scale-110 group-hover:text-deep-green group-hover:shadow-xl group-hover:shadow-white/20 transition-all duration-300">📍</div>
+                                    <div>
+                                        <p class="text-xs font-black text-green-200/50 uppercase tracking-widest mb-1">Visit Us</p>
+                                        <span class="font-bold text-base text-white group-hover:text-green-200 transition-colors">{{ $schoolSettings['school_address'] ?? '123 School Road, Dhaka' }}</span>
+                                    </div>
                                 </div>
-                                <div class="flex gap-4 items-center">
-                                    <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center">📞</div>
-                                    <span class="font-bold">{{ $schoolSettings['school_phone'] ?? '+880 1711 223 344' }}</span>
+                                <div class="group flex gap-5 items-center p-3 -ml-3 rounded-2xl hover:bg-white/5 transition-all duration-300 cursor-pointer">
+                                    <div class="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center text-xl group-hover:bg-white group-hover:scale-110 group-hover:text-deep-green group-hover:shadow-xl group-hover:shadow-white/20 transition-all duration-300">📞</div>
+                                    <div>
+                                        <p class="text-xs font-black text-green-200/50 uppercase tracking-widest mb-1">Call Us</p>
+                                        <span class="font-bold text-base text-white group-hover:text-green-200 transition-colors">{{ $schoolSettings['school_phone'] ?? '+880 1711 223 344' }}</span>
+                                    </div>
                                 </div>
-                                <div class="flex gap-4 items-center">
-                                    <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center">✉️</div>
-                                    <span class="font-bold">{{ $schoolSettings['school_email'] ?? 'info@banglamodel.edu.bd' }}</span>
+                                <div class="group flex gap-5 items-center p-3 -ml-3 rounded-2xl hover:bg-white/5 transition-all duration-300 cursor-pointer">
+                                    <div class="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center text-xl group-hover:bg-white group-hover:scale-110 group-hover:text-deep-green group-hover:shadow-xl group-hover:shadow-white/20 transition-all duration-300">✉️</div>
+                                    <div>
+                                        <p class="text-xs font-black text-green-200/50 uppercase tracking-widest mb-1">Email Us</p>
+                                        <span class="font-bold text-base text-white group-hover:text-green-200 transition-colors">{{ $schoolSettings['school_email'] ?? 'info@banglamodel.edu.bd' }}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-white p-10 rounded-[2.5rem] text-navy shadow-2xl">
+                        
+                        <div class="bg-white p-8 lg:p-10 rounded-[2.5rem] text-navy shadow-2xl shadow-black/20 relative">
+                            <!-- Decorative dot on form -->
+                            <div class="absolute -top-4 -right-4 w-10 h-10 bg-yellow-400 rounded-full shadow-lg"></div>
+
+                            <h3 class="text-2xl font-black mb-6 text-deep-green">Send us a Message</h3>
+
                             @if(session('success'))
-                                <div class="bg-green-100 border border-green-200 text-green-700 px-4 py-3 rounded-xl mb-6 font-bold text-sm">
+                                <div class="bg-green-100 border border-green-200 text-green-700 px-4 py-3 rounded-xl mb-4 font-bold text-sm">
                                     {{ session('success') }}
                                 </div>
                             @endif
                             @if(session('error'))
-                                <div class="bg-red-100 border border-red-200 text-red-700 px-4 py-3 rounded-xl mb-6 font-bold text-sm">
+                                <div class="bg-red-100 border border-red-200 text-red-700 px-4 py-3 rounded-xl mb-4 font-bold text-sm">
                                     {{ session('error') }}
                                 </div>
                             @endif
 
-                            <form action="{{ route('contact.send') }}" method="POST" class="space-y-6">
+                            <form action="{{ route('contact.send') }}" method="POST" class="space-y-5">
                                 @csrf
-                                <div>
-                                    <label class="block text-sm font-black text-gray-400 uppercase tracking-widest mb-2">Your Name</label>
-                                    <input type="text" name="name" required class="w-full bg-gray-50 border-none rounded-xl p-4 focus:ring-2 focus:ring-deep-green text-green-900 font-bold" placeholder="Ex: Rahul Khan">
+                                <div class="relative group">
+                                    <input type="text" id="name" name="name" required class="block px-4 pb-3 pt-6 w-full text-sm text-gray-900 bg-gray-50/80 rounded-xl border border-gray-100 appearance-none focus:outline-none focus:ring-2 focus:ring-deep-green focus:bg-white peer shadow-sm transition-all font-bold" placeholder=" ">
+                                    <label for="name" class="absolute text-[10px] font-black text-gray-400 uppercase tracking-widest duration-300 transform -translate-y-3 scale-75 top-4 z-10 origin-[0] left-4 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3 peer-focus:text-deep-green pointer-events-none">Your Name</label>
                                 </div>
-                                <div>
-                                    <label class="block text-sm font-black text-gray-400 uppercase tracking-widest mb-2">Email</label>
-                                    <input type="email" name="email" required class="w-full bg-gray-50 border-none rounded-xl p-4 focus:ring-2 focus:ring-deep-green text-green-900 font-bold" placeholder="name@email.com">
+                                <div class="relative group">
+                                    <input type="email" id="email" name="email" required class="block px-4 pb-3 pt-6 w-full text-sm text-gray-900 bg-gray-50/80 rounded-xl border border-gray-100 appearance-none focus:outline-none focus:ring-2 focus:ring-deep-green focus:bg-white peer shadow-sm transition-all font-bold" placeholder=" ">
+                                    <label for="email" class="absolute text-[10px] font-black text-gray-400 uppercase tracking-widest duration-300 transform -translate-y-3 scale-75 top-4 z-10 origin-[0] left-4 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3 peer-focus:text-deep-green pointer-events-none">Email Address</label>
                                 </div>
-                                <div>
-                                    <label class="block text-sm font-black text-gray-400 uppercase tracking-widest mb-2">Subject</label>
-                                    <input type="text" name="subject" required class="w-full bg-gray-50 border-none rounded-xl p-4 focus:ring-2 focus:ring-deep-green text-green-900 font-bold" placeholder="How can we help?">
+                                <div class="relative group">
+                                    <input type="text" id="subject" name="subject" required class="block px-4 pb-3 pt-6 w-full text-sm text-gray-900 bg-gray-50/80 rounded-xl border border-gray-100 appearance-none focus:outline-none focus:ring-2 focus:ring-deep-green focus:bg-white peer shadow-sm transition-all font-bold" placeholder=" ">
+                                    <label for="subject" class="absolute text-[10px] font-black text-gray-400 uppercase tracking-widest duration-300 transform -translate-y-3 scale-75 top-4 z-10 origin-[0] left-4 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3 peer-focus:text-deep-green pointer-events-none">Subject</label>
                                 </div>
-                                <div>
-                                    <label class="block text-sm font-black text-gray-400 uppercase tracking-widest mb-2">Message</label>
-                                    <textarea name="message" rows="4" required class="w-full bg-gray-50 border-none rounded-xl p-4 focus:ring-2 focus:ring-deep-green text-green-900 font-bold" placeholder="Write your message here..."></textarea>
+                                <div class="relative group">
+                                    <textarea id="message" name="message" rows="3" required class="block px-4 pb-3 pt-6 w-full text-sm text-gray-900 bg-gray-50/80 rounded-xl border border-gray-100 appearance-none focus:outline-none focus:ring-2 focus:ring-deep-green focus:bg-white peer shadow-sm transition-all font-bold resize-none" placeholder=" "></textarea>
+                                    <label for="message" class="absolute text-[10px] font-black text-gray-400 uppercase tracking-widest duration-300 transform -translate-y-3 scale-75 top-4 z-10 origin-[0] left-4 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3 peer-focus:text-deep-green pointer-events-none">Message</label>
                                 </div>
-                                <button type="submit" class="w-full bg-deep-green text-white font-black py-5 rounded-2xl shadow-xl hover:-translate-y-1 transition">Send Message</button>
+                                <button type="submit" class="w-full bg-gradient-to-r from-deep-green to-green-700 text-white font-black py-4 rounded-xl shadow-xl shadow-green-900/20 hover:shadow-green-900/40 hover:-translate-y-1 transition-all duration-300 mt-4">Send Message</button>
                             </form>
                         </div>
                     </div>
@@ -413,7 +443,7 @@
         </section>
 
         <!-- Footer -->
-        <footer class="relative bg-deep-green text-white pt-40 pb-20 overflow-hidden">
+        <footer class="relative bg-deep-green text-white pt-40 pb-8 overflow-hidden">
             <!-- Decorative Wave Top -->
             <div class="absolute top-0 left-0 w-full overflow-hidden leading-none rotate-180">
                 <svg class="relative block w-full h-24" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
@@ -422,7 +452,7 @@
             </div>
 
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div class="grid grid-cols-1 lg:grid-cols-4 gap-16 mb-24">
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-16 mb-12">
                     <!-- School Identity -->
                     <div class="space-y-8">
                         <div class="flex items-center gap-4">
@@ -490,10 +520,13 @@
                     </div>
                 </div>
 
-                <!-- Centered Bottom Bar -->
-                <div class="text-center pt-16 border-t border-white/10">
-                    <p class="text-[10px] font-black uppercase tracking-[0.5em] text-green-100/30">
-                        &copy; {{ date('Y') }} {{ $schoolSettings['school_name'] ?? 'Bangla Model School' }} • Nature & Knowledge
+                <!-- Bottom Bar -->
+                <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/20 gap-4">
+                    <p class="text-sm font-bold text-green-100">
+                        &copy; {{ date('Y') }} {{ $schoolSettings['school_name'] ?? 'Bangla Model School' }}. All rights reserved.
+                    </p>
+                    <p class="text-sm font-bold text-green-100">
+                        Developed by <span class="text-white">Nabid Ahmad</span>
                     </p>
                 </div>
             </div>

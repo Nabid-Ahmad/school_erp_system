@@ -15,10 +15,19 @@ class RoleMiddleware
      */
     public function handle(Request $request, Closure $next, string ...$roles): Response
     {
-        if (! $request->user() || ! in_array($request->user()->role, $roles)) {
+        if (! $request->user()) {
             abort(403, 'Unauthorized action.');
         }
 
-        return $next($request);
+        foreach ($roles as $role) {
+            if ($request->user()->role === $role) {
+                return $next($request);
+            }
+            if ($request->user()->can($role)) {
+                return $next($request);
+            }
+        }
+
+        abort(403, 'Unauthorized action.');
     }
 }

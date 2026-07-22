@@ -26,5 +26,9 @@ class AppServiceProvider extends ServiceProvider
         if (!app()->runningInConsole()) {
             \Illuminate\Support\Facades\View::share('schoolSettings', \App\Models\Setting::all()->pluck('value', 'key'));
         }
+
+        \Illuminate\Support\Facades\Gate::before(function ($user, $ability) {
+            return $user->role === 'admin' ? true : null;
+        });
     }
 }
