@@ -40,8 +40,20 @@ use App\Http\Controllers\Controller;
  
      public function destroy(Gallery $gallery)
      {
-         // Storage::disk('public')->delete($gallery->image);
+         if ($gallery->image && str_contains($gallery->image, 'res.cloudinary.com')) {
+             try {
+                 $parts = explode('/upload/', $gallery->image);
+                 if (isset($parts[1])) {
+                     $pathParts = explode('/', $parts[1]);
+                     array_shift($pathParts);
+                     $publicIdWithExt = implode('/', $pathParts);
+                     $publicId = pathinfo($publicIdWithExt, PATHINFO_DIRNAME) . '/' . pathinfo($publicIdWithExt, PATHINFO_FILENAME);
+                     cloudinary()->uploadApi()->destroy($publicId);
+                 }
+             } catch (\Exception $e) {}
+         }
+ 
          $gallery->delete();
-         return redirect()->route('galleries.index')->with('success', 'Gallery image deleted.');
+         return redirect()->route('galleries.index')->with('success', 'Image deleted successfully.');
      }
  }
