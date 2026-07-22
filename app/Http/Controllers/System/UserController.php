@@ -19,7 +19,8 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('users.create');
+        $permissions = \Spatie\Permission\Models\Permission::all();
+        return view('users.create', compact('permissions'));
     }
 
     public function store(Request $request)
@@ -29,21 +30,27 @@ class UserController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'role' => ['required', 'string', 'in:admin,teacher,staff'],
+            'permissions' => ['nullable', 'array'],
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,
         ]);
 
+        if ($request->has('permissions')) {
+            $user->syncPermissions($request->permissions);
+        }
+
         return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
 
     public function edit(User $user)
     {
-        return view('users.edit', compact('user'));
+        $permissions = \Spatie\Permission\Models\Permission::all();
+        return view('users.edit', compact('user', 'permissions'));
     }
 
     public function update(Request $request, User $user)
@@ -52,6 +59,7 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email,'.$user->id],
             'role' => ['required', 'string', 'in:admin,teacher,staff'],
+            'permissions' => ['nullable', 'array'],
         ]);
 
         $user->update([
@@ -59,6 +67,12 @@ class UserController extends Controller
             'email' => $request->email,
             'role' => $request->role,
         ]);
+
+        if ($request->has('permissions')) {
+            $user->syncPermissions($request->permissions);
+        } else {
+            $user->syncPermissions([]);
+        }
 
         if ($request->filled('password')) {
             $request->validate([
