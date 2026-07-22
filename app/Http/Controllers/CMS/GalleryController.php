@@ -28,7 +28,7 @@ use App\Http\Controllers\Controller;
              'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
          ]);
  
-         $imagePath = cloudinary()->upload($request->file('image')->getRealPath(), ['folder' => 'gallery'])->getSecurePath();
+         $imagePath = cloudinary()->uploadApi()->upload($request->file('image')->getRealPath(), ['folder' => 'gallery'])['secure_url'];
  
          Gallery::create([
              'title' => $request->title,

@@ -54,7 +54,7 @@ class StudentController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $validated['image'] = cloudinary()->upload($request->file('image')->getRealPath(), ['folder' => 'students'])->getSecurePath();
+            $validated['image'] = cloudinary()->uploadApi()->upload($request->file('image')->getRealPath(), ['folder' => 'students'])['secure_url'];
         }
 
         \App\Models\Student::create($validated);
