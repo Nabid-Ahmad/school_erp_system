@@ -68,6 +68,23 @@ class TeacherController extends Controller
 
     public function destroy(\App\Models\Teacher $teacher)
     {
+        if ($teacher->image && str_contains($teacher->image, 'res.cloudinary.com')) {
+            try {
+                $parts = explode('/upload/', $teacher->image);
+                if (isset($parts[1])) {
+                    $pathParts = explode('/', $parts[1]);
+                    array_shift($pathParts);
+                    $publicIdWithExt = implode('/', $pathParts);
+                    $publicId = pathinfo($publicIdWithExt, PATHINFO_DIRNAME) . '/' . pathinfo($publicIdWithExt, PATHINFO_FILENAME);
+                    cloudinary()->uploadApi()->destroy($publicId);
+                }
+            } catch (\Exception $e) {}
+        }
+
+        if ($teacher->user) {
+            $teacher->user->delete();
+        }
+
         $teacher->delete();
         return redirect()->route('teachers.index')->with('success', 'Teacher deleted successfully.');
     }

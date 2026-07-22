@@ -47,10 +47,20 @@ use App\Http\Controllers\Controller;
  
      public function destroy(Event $event)
      {
-         if ($event->image) {
-             // Storage::disk('public')->delete($event->image);
+         if ($event->image && str_contains($event->image, 'res.cloudinary.com')) {
+             try {
+                 $parts = explode('/upload/', $event->image);
+                 if (isset($parts[1])) {
+                     $pathParts = explode('/', $parts[1]);
+                     array_shift($pathParts);
+                     $publicIdWithExt = implode('/', $pathParts);
+                     $publicId = pathinfo($publicIdWithExt, PATHINFO_DIRNAME) . '/' . pathinfo($publicIdWithExt, PATHINFO_FILENAME);
+                     cloudinary()->uploadApi()->destroy($publicId);
+                 }
+             } catch (\Exception $e) {}
          }
+ 
          $event->delete();
-         return redirect()->route('events.index')->with('success', 'Event deleted.');
+         return redirect()->route('events.index')->with('success', 'Event deleted successfully.');
      }
  }
