@@ -37,7 +37,7 @@
                                 <tr class="hover:bg-gray-50 border-b">
                                     <td class="px-4 py-3">
                                         @if($student->image)
-                                            <img src="{{ asset('storage/' . $student->image) }}" class="w-10 h-10 rounded-full object-cover">
+                                            <img src="{{ filter_var($student->image, FILTER_VALIDATE_URL) ? $student->image : asset('storage/' . $student->image) }}" class="w-10 h-10 rounded-full object-cover">
                                         @else
                                             <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-xs text-gray-500">No</div>
                                         @endif

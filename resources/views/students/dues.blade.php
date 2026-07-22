@@ -18,7 +18,7 @@
             <!-- Student Mini Profile -->
             <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 mb-8 flex items-center gap-8">
                 @if($student->image)
-                    <img src="{{ asset('storage/' . $student->image) }}" class="w-24 h-24 rounded-2xl object-cover shadow-lg">
+                    <img src="{{ filter_var($student->image, FILTER_VALIDATE_URL) ? $student->image : asset('storage/' . $student->image) }}" class="w-24 h-24 rounded-2xl object-cover shadow-lg">
                 @else
                     <div class="w-24 h-24 rounded-2xl bg-green-50 flex items-center justify-center text-green-600 font-bold text-2xl">
                         {{ substr($student->name, 0, 1) }}

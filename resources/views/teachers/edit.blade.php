@@ -22,7 +22,7 @@
                             <label for="image" class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2">Teacher Profile Photo</label>
                             @if($teacher->image)
                                 <div class="mb-2">
-                                    <img src="{{ asset('storage/'.$teacher->image) }}" class="w-20 h-20 rounded-xl object-cover border border-gray-100 shadow-sm">
+                                    <img src="{{ filter_var($teacher->image, FILTER_VALIDATE_URL) ? $teacher->image : asset('storage/'.$teacher->image) }}" class="w-20 h-20 rounded-xl object-cover border border-gray-100 shadow-sm">
                                 </div>
                             @endif
                             <input type="file" name="image" id="image" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-blue-700 transition cursor-pointer shadow-sm">

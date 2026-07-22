@@ -32,7 +32,7 @@ use App\Http\Controllers\Controller;
  
          $imagePath = null;
          if ($request->hasFile('image')) {
-             $imagePath = $request->file('image')->store('events', 'public');
+             $imagePath = $request->file('image')->storeOnCloudinary('events')->getSecurePath();
          }
  
          Event::create([
@@ -48,7 +48,7 @@ use App\Http\Controllers\Controller;
      public function destroy(Event $event)
      {
          if ($event->image) {
-             Storage::disk('public')->delete($event->image);
+             // Storage::disk('public')->delete($event->image);
          }
          $event->delete();
          return redirect()->route('events.index')->with('success', 'Event deleted.');

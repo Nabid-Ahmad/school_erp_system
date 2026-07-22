@@ -22,7 +22,7 @@
             <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-gray-100 flex flex-col md:flex-row gap-8 items-center">
                 <div class="relative">
                     @if($student->image)
-                        <img src="{{ asset('storage/' . $student->image) }}" class="w-32 h-32 rounded-[2rem] object-cover border-4 border-white shadow-xl">
+                        <img src="{{ filter_var($student->image, FILTER_VALIDATE_URL) ? $student->image : asset('storage/' . $student->image) }}" class="w-32 h-32 rounded-[2rem] object-cover border-4 border-white shadow-xl">
                     @else
                         <div class="w-32 h-32 rounded-[2rem] bg-gray-100 flex items-center justify-center text-gray-400 font-black text-2xl border-4 border-white shadow-xl">
                             {{ substr($student->name, 0, 1) }}

@@ -32,7 +32,7 @@ class TeacherController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('teachers', 'public');
+            $validated['image'] = $request->file('image')->storeOnCloudinary('teachers')->getSecurePath();
         }
 
         \App\Models\Teacher::create($validated);
@@ -58,7 +58,7 @@ class TeacherController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('teachers', 'public');
+            $validated['image'] = $request->file('image')->storeOnCloudinary('teachers')->getSecurePath();
         }
 
         $teacher->update($validated);
