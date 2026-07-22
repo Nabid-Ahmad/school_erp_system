@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     libsqlite3-dev \
+    libpq-dev \
     nodejs \
     npm
 
@@ -17,7 +18,7 @@ RUN apt-get update && apt-get install -y \
 RUN a2enmod rewrite
 
 # Install PHP extensions
-RUN docker-php-ext-install pdo pdo_sqlite pdo_mysql gd
+RUN docker-php-ext-install pdo pdo_sqlite pdo_mysql pdo_pgsql pgsql gd
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
