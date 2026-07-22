@@ -54,7 +54,7 @@ class StudentController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->storeOnCloudinary('students')->getSecurePath();
+            $validated['image'] = cloudinary()->upload($request->file('image')->getRealPath(), ['folder' => 'students'])->getSecurePath();
         }
 
         \App\Models\Student::create($validated);
