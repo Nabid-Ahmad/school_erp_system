@@ -1,4 +1,4 @@
-FROM php:8.2-apache
+FROM php:8.3-apache
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
@@ -39,8 +39,7 @@ RUN sed -i -e 's/html/html\/public/g' /etc/apache2/sites-available/000-default.c
 
 # Install Composer and NPM dependencies
 RUN composer install --optimize-autoloader --no-dev
-RUN npm install && npm run build
-
+# RUN npm install && npm run build
 # Set Permissions for Laravel
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
