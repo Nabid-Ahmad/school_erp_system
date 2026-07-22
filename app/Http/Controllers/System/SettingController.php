@@ -21,7 +21,7 @@ class SettingController extends Controller
         $data = $request->except('_token');
 
         if ($request->hasFile('school_logo')) {
-            $path = cloudinary()->upload($request->file('school_logo')->getRealPath(), ['folder' => 'school'])->getSecurePath();
+            $path = cloudinary()->uploadApi()->upload($request->file('school_logo')->getRealPath(), ['folder' => 'school'])['secure_url'];
             Setting::where('key', 'school_logo')->update(['value' => $path]);
         }
 

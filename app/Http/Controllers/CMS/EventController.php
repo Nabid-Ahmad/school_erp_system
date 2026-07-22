@@ -32,7 +32,7 @@ use App\Http\Controllers\Controller;
  
          $imagePath = null;
          if ($request->hasFile('image')) {
-             $imagePath = cloudinary()->upload($request->file('image')->getRealPath(), ['folder' => 'events'])->getSecurePath();
+             $imagePath = cloudinary()->uploadApi()->upload($request->file('image')->getRealPath(), ['folder' => 'events'])['secure_url'];
          }
  
          Event::create([

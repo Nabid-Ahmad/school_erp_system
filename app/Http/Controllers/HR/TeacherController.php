@@ -32,7 +32,7 @@ class TeacherController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $validated['image'] = cloudinary()->upload($request->file('image')->getRealPath(), ['folder' => 'teachers'])->getSecurePath();
+            $validated['image'] = cloudinary()->uploadApi()->upload($request->file('image')->getRealPath(), ['folder' => 'teachers'])['secure_url'];
         }
 
         \App\Models\Teacher::create($validated);
@@ -58,7 +58,7 @@ class TeacherController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $validated['image'] = cloudinary()->upload($request->file('image')->getRealPath(), ['folder' => 'teachers'])->getSecurePath();
+            $validated['image'] = cloudinary()->uploadApi()->upload($request->file('image')->getRealPath(), ['folder' => 'teachers'])['secure_url'];
         }
 
         $teacher->update($validated);
