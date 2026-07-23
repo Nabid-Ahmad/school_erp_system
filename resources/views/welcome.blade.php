@@ -628,6 +628,7 @@
 
                             <form action="{{ route('contact.send') }}" method="POST" class="space-y-5">
                                 @csrf
+                                @honeypot
                                 <div class="relative group">
                                     <input type="text" id="name" name="name" required class="block px-4 pb-3 pt-6 w-full text-sm text-gray-900 bg-gray-50/80 rounded-xl border border-gray-100 appearance-none focus:outline-none focus:ring-2 focus:ring-deep-green focus:bg-white peer shadow-sm transition-all font-bold" placeholder=" ">
                                     <label for="name" class="absolute text-[10px] font-black text-gray-400 uppercase tracking-widest duration-300 transform -translate-y-3 scale-75 top-4 z-10 origin-[0] left-4 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3 peer-focus:text-deep-green pointer-events-none">Your Name</label>

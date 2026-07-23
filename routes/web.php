@@ -22,7 +22,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Public Contact Route (Accessible without login)
-Route::post('/contact/send', [\App\Http\Controllers\CMS\ContactController::class, 'send'])->name('contact.send');
+Route::post('/contact/send', [\App\Http\Controllers\CMS\ContactController::class, 'send'])->middleware(\Spatie\Honeypot\ProtectAgainstSpam::class)->name('contact.send');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
