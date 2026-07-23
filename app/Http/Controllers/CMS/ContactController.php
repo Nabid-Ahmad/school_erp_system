@@ -40,7 +40,8 @@ class ContactController extends Controller
             Mail::to($adminEmail)->send(new ContactUsMail($validated));
             return redirect()->back()->with('success', 'Your message has been sent successfully!');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Something went wrong. Please try again later.');
+            \Log::error('SMTP Error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Something went wrong. Please try again later. Error: ' . $e->getMessage());
         }
     }
 }
