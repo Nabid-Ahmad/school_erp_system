@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="py-12 min-h-screen relative overflow-hidden" style="background: url('/images/water_bg.png') center center fixed; background-size: cover;">
         <!-- Subtle Overlay for Readability -->
-        <div class="absolute inset-0 bg-white/85"></div>
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-900/95 via-emerald-900/90 to-teal-900/95 backdrop-blur-sm"></div>
         
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 relative z-10">
             <!-- School Header Banner -->
