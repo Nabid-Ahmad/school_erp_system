@@ -23,8 +23,8 @@ class ContactController extends Controller
         config([
             'mail.default' => 'smtp',
             'mail.mailers.smtp.host' => 'smtp.gmail.com',
-            'mail.mailers.smtp.port' => 587,
-            'mail.mailers.smtp.encryption' => 'tls',
+            'mail.mailers.smtp.port' => 465,
+            'mail.mailers.smtp.encryption' => 'ssl',
             'mail.mailers.smtp.username' => 'nabidahmad.zidan@gmail.com',
             'mail.mailers.smtp.password' => 'bcjj mwgp jiou eepd',
             'mail.from.address' => 'nabidahmad.zidan@gmail.com',
