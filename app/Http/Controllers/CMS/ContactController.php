@@ -19,16 +19,15 @@ class ContactController extends Controller
             'message' => 'required|string',
         ]);
 
-        // Hardcoded SMTP Configuration as requested
+        // Resend API Configuration
         config([
-            'mail.default' => 'smtp',
-            'mail.mailers.smtp.host' => 'smtp.gmail.com',
-            'mail.mailers.smtp.port' => 465,
-            'mail.mailers.smtp.encryption' => 'ssl',
-            'mail.mailers.smtp.username' => 'nabidahmad.zidan@gmail.com',
-            'mail.mailers.smtp.password' => 'bcjj mwgp jiou eepd',
-            'mail.from.address' => 'nabidahmad.zidan@gmail.com',
-            'mail.from.name' => 'School ERP',
+            'resend.api_key' => 're_pzndZ47i_upogSZSNoxZndTvBdeiAY7ko',
+            'mail.default' => 'resend',
+            'mail.mailers.resend' => [
+                'transport' => 'resend',
+            ],
+            'mail.from.address' => 'onboarding@resend.dev',
+            'mail.from.name' => 'Bangla Model School',
         ]);
 
         $adminEmail = \App\Models\Setting::where('key', 'school_email')->value('value');
