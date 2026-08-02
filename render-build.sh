@@ -27,4 +27,4 @@ php artisan storage:link --relative
 
 echo "Seeding database..."
 # Uncomment the line below if you want to seed the database on every deploy
-# php artisan db:seed --force
+php artisan db:seed --force
