@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\HR;
 
 use App\Http\Controllers\Controller;
-
+use App\Models\Expense;
 use App\Models\Salary;
 use App\Models\Teacher;
-use App\Models\Expense;
+use App\Services\SalaryDuesService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class SalaryController extends Controller
 {
@@ -16,20 +18,9 @@ class SalaryController extends Controller
         $salaries = Salary::with('teacher')->latest()->paginate(15);
         $teachers = Teacher::all();
 
-        // Calculate total due for each teacher
+        $service = app(SalaryDuesService::class);
         foreach ($teachers as $teacher) {
-            $joiningDate = $teacher->joining_date ? \Carbon\Carbon::parse($teacher->joining_date) : $teacher->created_at;
-            $currentDate = \Carbon\Carbon::now()->startOfMonth();
-            $totalFixed = 0;
-            
-            $tempDate = $joiningDate->copy()->startOfMonth();
-            while ($tempDate->lte($currentDate)) {
-                $totalFixed += $teacher->salary;
-                $tempDate->addMonth();
-            }
-
-            $totalPaid = $teacher->salaries()->sum('amount');
-            $teacher->total_due = $totalFixed - $totalPaid;
+            $teacher->total_due = $service->calculate($teacher)['total_due'];
         }
 
         return view('salaries.index', compact('salaries', 'teachers'));
@@ -50,19 +41,46 @@ class SalaryController extends Controller
             $validated['payment_date'] = date('Y-m-d');
         }
 
-        $salary = Salary::create($validated);
+        $alreadyPaid = Salary::where('teacher_id', $validated['teacher_id'])
+            ->where('month', $validated['month'])
+            ->where('year', $validated['year'])
+            ->exists();
 
-        // Auto-create an expense record
-        Expense::create([
-            'title' => 'Salary Payment: ' . $salary->teacher->name . ' (' . $salary->month . ' ' . $salary->year . ')',
-            'amount' => $salary->amount,
-            'category' => 'Salary',
-            'date' => $salary->payment_date,
-            'month' => $salary->month,
-            'year' => $salary->year,
-            'description' => $salary->note,
-        ]);
+        if ($alreadyPaid) {
+            return redirect()->back()->with('error', 'Salary for this teacher and month has already been paid.');
+        }
+
+        try {
+            $salary = DB::transaction(function () use ($validated) {
+                $salary = Salary::create($validated);
+
+                Expense::create([
+                    'salary_id' => $salary->id,
+                    'title' => 'Salary Payment: '.$salary->teacher->name.' ('.$salary->month.' '.$salary->year.')',
+                    'amount' => $salary->amount,
+                    'category' => 'Salary',
+                    'date' => $salary->payment_date,
+                    'month' => $salary->month,
+                    'year' => $salary->year,
+                    'description' => $salary->note,
+                ]);
+
+                return $salary;
+            });
+        } catch (\Throwable $e) {
+            Log::error('Salary payment error: '.$e->getMessage());
+
+            return redirect()->back()->with('error', 'Could not save the salary payment. Please try again.');
+        }
 
         return redirect()->back()->with('success', 'Salary paid and recorded as expense.');
+    }
+
+    public function destroy(Salary $salary)
+    {
+        // Deleting the salary cascades to its linked expense record.
+        $salary->delete();
+
+        return redirect()->back()->with('success', 'Salary payment deleted.');
     }
 }

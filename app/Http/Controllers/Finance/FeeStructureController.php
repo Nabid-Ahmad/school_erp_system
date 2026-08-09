@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Finance;
 
 use App\Http\Controllers\Controller;
-
 use App\Models\FeeStructure;
 use App\Models\SchoolClass;
+use App\Services\FeeDuesService;
 use Illuminate\Http\Request;
 
 class FeeStructureController extends Controller
@@ -13,7 +13,8 @@ class FeeStructureController extends Controller
     public function index()
     {
         $classes = SchoolClass::with('feeStructures')->get();
-        $feeTypes = ['Admission Fee', 'Monthly Fee', 'Exam Fee 1', 'Exam Fee 2', 'Other Fee'];
+        $feeTypes = FeeDuesService::FEE_TYPES;
+
         return view('fee_structures.index', compact('classes', 'feeTypes'));
     }
 
@@ -21,7 +22,7 @@ class FeeStructureController extends Controller
     {
         $validated = $request->validate([
             'school_class_id' => 'required|exists:school_classes,id',
-            'fee_type' => 'required|string',
+            'fee_type' => 'required|string|in:'.implode(',', FeeDuesService::FEE_TYPES),
             'amount' => 'required|numeric|min:0',
         ]);
 

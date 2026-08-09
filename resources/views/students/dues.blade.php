@@ -28,8 +28,12 @@
                     <h3 class="text-2xl font-black text-gray-800">{{ $student->name }}</h3>
                     <p class="text-gray-400 font-bold">Roll: {{ $student->roll }} | Class: {{ $student->schoolClass->name ?? 'N/A' }}</p>
                     <div class="mt-2 flex gap-4 text-sm font-bold">
-                        <span class="text-green-600">Monthly Fee: ৳{{ number_format($student->schoolClass->monthly_fee ?? 0, 2) }}</span>
-                        <span class="text-blue-600">Admission Fee: ৳{{ number_format($student->schoolClass->admission_fee ?? 0, 2) }}</span>
+                        @php
+                            $monthlyFeeAmount = $student->schoolClass->feeStructures->where('fee_type', 'Monthly Fee')->first()->amount ?? 0;
+                            $admissionFeeAmount = $student->schoolClass->feeStructures->where('fee_type', 'Admission Fee')->first()->amount ?? 0;
+                        @endphp
+                        <span class="text-green-600">Monthly Fee: ৳{{ number_format($monthlyFeeAmount, 2) }}</span>
+                        <span class="text-blue-600">Admission Fee: ৳{{ number_format($admissionFeeAmount, 2) }}</span>
                     </div>
                 </div>
             </div>
