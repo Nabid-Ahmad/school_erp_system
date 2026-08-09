@@ -74,7 +74,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6" class="px-4 py-3 text-center text-gray-500">No records found.</td>
+                                    <td colspan="9" class="px-4 py-3 text-center text-gray-500">No records found.</td>
                                 </tr>
                             @endforelse
                         </tbody>

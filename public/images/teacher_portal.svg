@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7C3AED"/>
+      <stop offset="100%" stop-color="#5B21B6"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.92)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0.75)"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1000" fill="url(#bg)"/>
+  <circle cx="680" cy="140" r="220" fill="rgba(255,255,255,0.08)"/>
+  <circle cx="120" cy="880" r="280" fill="rgba(255,255,255,0.06)"/>
+  <g fill="#ffffff" opacity="0.9">
+    <rect x="180" y="220" width="440" height="320" rx="24"/>
+    <rect x="300" y="250" width="200" height="250" rx="100" fill="none" stroke="#C4B5FD" stroke-width="8"/>
+  </g>
+  <circle cx="400" cy="330" r="56" fill="#FBBF24"/>
+  <path d="M320 440 q80 70 160 0" fill="none" stroke="#DDD6FE" stroke-width="10" stroke-linecap="round"/>
+  <rect x="300" y="560" width="200" height="28" rx="14" fill="#A78BFA"/>
+  <rect x="340" y="610" width="120" height="16" rx="8" fill="#C4B5FD"/>
+  <rect x="210" y="640" width="380" height="150" rx="24" fill="url(#card)"/>
+  <text x="400" y="700" text-anchor="middle" font-family="sans-serif" font-size="42" font-weight="800" fill="#5B21B6">Teacher Portal</text>
+  <text x="400" y="752" text-anchor="middle" font-family="sans-serif" font-size="24" font-weight="600" fill="#8B5CF6">Bangla Model School</text>
+</svg>

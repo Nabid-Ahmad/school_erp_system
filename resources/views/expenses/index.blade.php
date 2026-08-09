@@ -12,7 +12,13 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            
+
+            @if(session('success'))
+                <div class="mb-6 p-4 bg-green-50 border border-green-200 text-green-700 rounded-2xl font-bold text-sm">
+                    {{ session('success') }}
+                </div>
+            @endif
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
                     <p class="text-xs font-black text-gray-400 uppercase tracking-widest mb-2">Total Expenses</p>
@@ -33,7 +39,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($expenses as $expense)
+                            @forelse($expenses as $expense)
                             <tr class="border-b hover:bg-gray-50 transition">
                                 <td class="px-4 py-4 text-sm text-gray-500 font-bold">{{ \Carbon\Carbon::parse($expense->date)->format('d M, Y') }}</td>
                                 <td class="px-4 py-4 font-bold text-gray-800">{{ $expense->title }}</td>
@@ -55,10 +61,26 @@
                                     </form>
                                 </td>
                             </tr>
-                            @endforeach
+                            @empty
+                            <tr>
+                                <td colspan="5" class="px-4 py-16 text-center">
+                                    <div class="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center text-gray-300 mx-auto mb-4">
+                                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                    </div>
+                                    <h5 class="text-xl font-black text-gray-800">No Expenses Found</h5>
+                                    <p class="text-gray-400 mt-1">Record your first expense to get started.</p>
+                                </td>
+                            </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
+
+                @if($expenses->hasPages())
+                    <div class="px-6 py-4 border-t border-gray-100">
+                        {{ $expenses->links() }}
+                    </div>
+                @endif
             </div>
         </div>
     </div>
