@@ -14,8 +14,66 @@
                 </div>
             </div>
 
+            <!-- Global Search -->
+            <form action="{{ route('search') }}" method="GET" class="hidden md:flex flex-1 max-w-md mx-4 items-center bg-purple-50 border border-purple-100 rounded-2xl px-4 py-2 focus-within:ring-2 focus-within:ring-purple-300 focus-within:bg-white transition-all">
+                <svg class="w-4 h-4 text-purple-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                <input type="text" name="q" value="{{ request('q') }}" placeholder="Search anything..." class="bg-transparent border-none focus:ring-0 text-xs font-bold text-purple-700 placeholder-purple-300 w-full">
+            </form>
+
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
+                <!-- Notifications Bell -->
+                <div class="flex items-center mr-6">
+                    <x-dropdown align="right" width="w-80" contentClasses="py-1 bg-white overflow-hidden">
+                        <x-slot name="trigger">
+                            <button class="p-2 text-purple-400 hover:text-purple-600 transition-colors relative" aria-label="Notifications">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                                @if(auth()->user()->unreadNotifications->count() > 0)
+                                    <span class="absolute -top-1 -right-1 min-w-[18px] h-[18px] bg-red-500 rounded-full border-2 border-white text-white text-[9px] font-black flex items-center justify-center px-1">
+                                        {{ auth()->user()->unreadNotifications->count() }}
+                                    </span>
+                                @endif
+                            </button>
+                        </x-slot>
+
+                        <x-slot name="content">
+                            <div class="px-4 py-2 border-b border-purple-50 flex items-center justify-between">
+                                <p class="text-xs font-bold text-purple-400 uppercase tracking-widest">Notifications</p>
+                                @if(auth()->user()->unreadNotifications->count() > 0)
+                                    <form method="POST" action="{{ route('notifications.read-all') }}">
+                                        @csrf
+                                        <button type="submit" class="text-[10px] font-black text-primary hover:underline">Mark all as read</button>
+                                    </form>
+                                @endif
+                            </div>
+
+                            <div class="max-h-80 overflow-y-auto">
+                                @forelse(auth()->user()->notifications->take(8) as $notification)
+                                    @php
+                                        $data = $notification->data;
+                                        $notifUrl = $data['url'] ?? null;
+                                        $notifId = $notification->id;
+                                    @endphp
+                                    <a href="{{ $notifUrl ?? '#' }}"
+                                       onclick="{{ $notifUrl ? "event.preventDefault(); markNotificationRead('{$notifId}', '{$notifUrl}');" : '' }}"
+                                       class="block px-4 py-3 hover:bg-purple-50 transition {{ $notification->read_at ? '' : 'bg-purple-50/60' }}">
+                                        <p class="text-sm font-black text-gray-800">{{ $data['title'] ?? 'Notification' }}</p>
+                                        <p class="text-xs text-gray-500 font-medium mt-0.5 line-clamp-2">{{ $data['message'] ?? '' }}</p>
+                                        <p class="text-[10px] font-bold text-gray-400 mt-1">{{ $notification->created_at->diffForHumans() }}</p>
+                                    </a>
+                                @empty
+                                    <div class="px-4 py-10 text-center">
+                                        <div class="w-12 h-12 bg-purple-50 rounded-full flex items-center justify-center text-purple-300 mx-auto mb-2">
+                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                                        </div>
+                                        <p class="text-xs font-bold text-gray-400">No notifications yet</p>
+                                    </div>
+                                @endforelse
+                            </div>
+                        </x-slot>
+                    </x-dropdown>
+                </div>
+
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="flex items-center gap-3 p-1 pr-3 rounded-2xl hover:bg-purple-50 transition-all border border-transparent hover:border-purple-100">
@@ -69,6 +127,13 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden bg-white border-b border-purple-100">
         <div class="pt-2 pb-3 space-y-1">
+            <form action="{{ route('search') }}" method="GET" class="px-4 pb-2">
+                <div class="flex items-center bg-purple-50 border border-purple-100 rounded-2xl px-3 py-2 focus-within:ring-2 focus-within:ring-purple-300 transition-all">
+                    <svg class="w-4 h-4 text-purple-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    <input type="text" name="q" value="{{ request('q') }}" placeholder="Search anything..." class="bg-transparent border-none focus:ring-0 text-xs font-bold text-purple-700 placeholder-purple-300 w-full">
+                </div>
+            </form>
+
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="text-purple-700 hover:bg-purple-50 focus:bg-purple-50">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
@@ -100,4 +165,18 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function markNotificationRead(id, url) {
+            fetch('/notifications/' + id + '/read', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'Accept': 'application/json',
+                },
+            }).finally(() => {
+                window.location.href = url;
+            });
+        }
+    </script>
 </nav>

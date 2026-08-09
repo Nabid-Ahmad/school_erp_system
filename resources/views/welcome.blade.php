@@ -271,7 +271,7 @@
                     <div class="lg:col-span-5 relative reveal">
                         <div class="relative z-10 rounded-3xl overflow-hidden shadow-2xl border-[8px] border-green-50/50 group">
                             <div class="absolute inset-0 bg-blue-900/10 group-hover:bg-transparent transition duration-500 z-10"></div>
-                            <img src="{{ asset('images/student_portal.svg') }}" class="w-full h-full object-cover aspect-[4/5] group-hover:scale-105 transition duration-700" alt="Student Services">
+                            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2070&auto=format&fit=crop" onerror="this.onerror=null; this.src='{{ asset('images/student_portal.svg') }}'" class="w-full h-full object-cover aspect-[4/5] group-hover:scale-105 transition duration-700" alt="Student Services">
                             
                             <!-- Floating Card -->
                             <div class="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur px-6 py-4 rounded-2xl shadow-xl z-20 flex items-center justify-between">
@@ -379,7 +379,7 @@
                     <div class="lg:col-span-5 order-1 lg:order-2 relative reveal">
                         <div class="relative z-10 rounded-3xl overflow-hidden shadow-2xl border-[8px] border-white group">
                             <div class="absolute inset-0 bg-green-900/10 group-hover:bg-transparent transition duration-500 z-10"></div>
-                            <img src="{{ asset('images/teacher_portal.svg') }}" class="w-full h-full object-cover aspect-[4/5] group-hover:scale-105 transition duration-700" alt="Teacher Services">
+                            <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=2070&auto=format&fit=crop" onerror="this.onerror=null; this.src='{{ asset('images/teacher_portal.svg') }}'" class="w-full h-full object-cover aspect-[4/5] group-hover:scale-105 transition duration-700" alt="Teacher Services">
                             
                             <!-- Floating Card -->
                             <div class="absolute top-6 left-6 right-6 bg-white/95 backdrop-blur px-6 py-4 rounded-2xl shadow-xl z-20 flex items-center gap-4">
@@ -412,7 +412,7 @@
                     <div class="lg:col-span-5 relative reveal">
                         <div class="relative z-10 rounded-3xl overflow-hidden shadow-2xl border-[8px] border-purple-50 group">
                             <div class="absolute inset-0 bg-purple-900/10 group-hover:bg-transparent transition duration-500 z-10"></div>
-                            <img src="{{ asset('images/parent_portal.svg') }}" class="w-full h-full object-cover aspect-[4/5] group-hover:scale-105 transition duration-700" alt="Parent Services">
+                            <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=2070&auto=format&fit=crop" onerror="this.onerror=null; this.src='{{ asset('images/parent_portal.svg') }}'" class="w-full h-full object-cover aspect-[4/5] group-hover:scale-105 transition duration-700" alt="Parent Services">
                             
                             <!-- Floating Card -->
                             <div class="absolute bottom-6 right-6 bg-white/95 backdrop-blur px-6 py-4 rounded-2xl shadow-xl z-20 flex flex-col gap-1 items-end">

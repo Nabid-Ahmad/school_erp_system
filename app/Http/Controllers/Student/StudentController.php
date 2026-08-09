@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\SchoolClass;
 use App\Models\Student;
 use App\Services\FeeDuesService;
+use App\Services\NotificationService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
@@ -60,7 +61,13 @@ class StudentController extends Controller
             $validated['image'] = cloudinary()->uploadApi()->upload($request->file('image')->getRealPath(), ['folder' => 'students'])['secure_url'];
         }
 
-        Student::create($validated);
+        $student = Student::create($validated);
+
+        NotificationService::toAdmins(
+            'New Student Registered',
+            "{$student->name} (Roll: {$student->roll}) was added.",
+            route('students.show', $student)
+        );
 
         return redirect()->route('students.index')->with('success', 'Student added successfully.');
     }

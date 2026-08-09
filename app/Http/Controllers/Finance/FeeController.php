@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Fee;
 use App\Models\Student;
 use App\Services\FeeDuesService;
+use App\Services\NotificationService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
@@ -58,6 +59,12 @@ class FeeController extends Controller
         }
 
         $fee = Fee::create($validated);
+
+        NotificationService::toAdmins(
+            'Fee Collected',
+            "{$student->name} paid ৳".number_format($fee->amount, 2)." ({$fee->fee_type}).",
+            route('fees.index')
+        );
 
         return redirect()->route('fees.index')->with('success', 'Fee record created successfully.')
             ->with('print_id', $fee->id);
