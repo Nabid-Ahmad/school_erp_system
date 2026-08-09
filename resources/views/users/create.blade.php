@@ -1,8 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Add New User') }}
-        </h2>
+        <div class="flex items-center">
+            <a href="{{ route('users.index') }}" class="text-gray-500 hover:text-gray-700 mr-4">
+                &larr; Back
+            </a>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Add New User') }}
+            </h2>
+        </div>
     </x-slot>
 
     <div class="py-12">
@@ -31,7 +36,7 @@
                             </select>
                         </div>
 
-                        <div class="grid grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-sm font-black text-gray-400 uppercase tracking-widest mb-2">Password</label>
                                 <input type="password" name="password" class="w-full bg-gray-50 border-none rounded-xl p-4 focus:ring-2 focus:ring-primary font-bold" required>

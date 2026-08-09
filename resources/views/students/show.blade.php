@@ -1,9 +1,14 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Student Profile: {{ $student->name }}
-            </h2>
+            <div class="flex items-center">
+                <a href="{{ route('students.index') }}" class="text-gray-500 hover:text-gray-700 mr-4">
+                    &larr; Back
+                </a>
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    Student Profile: {{ $student->name }}
+                </h2>
+            </div>
             <div class="flex gap-3">
                 <a href="{{ route('students.id-card', $student) }}" class="bg-green-600 text-white px-4 py-2 rounded-xl font-bold text-sm hover:opacity-90 transition">
                     Download ID Card

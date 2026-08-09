@@ -81,7 +81,7 @@
             <div style="clear: both;"></div>
         </div>
 
-        <div class="stamp">PAID</div>
+        <div class="stamp" style="{{ $fee->status === 'paid' ? '' : 'color: #dc2626; border-color: #dc2626;' }}">{{ strtoupper($fee->status) }}</div>
     </div>
 </body>
 </html>

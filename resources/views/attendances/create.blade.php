@@ -1,8 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Take Attendance') }}
-        </h2>
+        <div class="flex items-center">
+            <a href="{{ route('attendances.index') }}" class="text-gray-500 hover:text-gray-700 mr-4">
+                &larr; Back
+            </a>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Take Attendance') }}
+            </h2>
+        </div>
     </x-slot>
 
     <div class="py-12">
@@ -11,7 +16,7 @@
             <!-- Class Selection -->
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
                 <div class="p-6 text-gray-900">
-                    <form action="{{ route('attendances.create') }}" method="GET" class="flex items-end gap-4">
+                    <form action="{{ route('attendances.create') }}" method="GET" class="flex flex-col sm:flex-row items-end gap-4">
                         <div class="flex-1">
                             <label for="class_id" class="block text-sm font-medium text-gray-700">Select Class</label>
                             <select name="class_id" id="class_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm" required>
@@ -40,31 +45,34 @@
                         <form action="{{ route('attendances.store') }}" method="POST">
                             @csrf
                             <input type="hidden" name="date" value="{{ $selected_date }}">
+                            <input type="hidden" name="class_id" value="{{ $selected_class }}">
                             
-                            <table class="w-full text-left border-collapse mb-6">
-                                <thead>
-                                    <tr class="bg-gray-100 text-gray-700">
-                                        <th class="px-4 py-3 border-b">Roll</th>
-                                        <th class="px-4 py-3 border-b">Student Name</th>
-                                        <th class="px-4 py-3 border-b text-center">Present</th>
-                                        <th class="px-4 py-3 border-b text-center">Absent</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($students as $student)
-                                        <tr class="border-b hover:bg-gray-50">
-                                            <td class="px-4 py-3">{{ $student->roll }}</td>
-                                            <td class="px-4 py-3 font-medium">{{ $student->name }}</td>
-                                            <td class="px-4 py-3 text-center">
-                                                <input type="radio" name="attendance[{{ $student->id }}]" value="present" class="text-success focus:ring-success" checked required>
-                                            </td>
-                                            <td class="px-4 py-3 text-center">
-                                                <input type="radio" name="attendance[{{ $student->id }}]" value="absent" class="text-danger focus:ring-danger">
-                                            </td>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse mb-6">
+                                    <thead>
+                                        <tr class="bg-gray-100 text-gray-700">
+                                            <th class="px-4 py-3 border-b">Roll</th>
+                                            <th class="px-4 py-3 border-b">Student Name</th>
+                                            <th class="px-4 py-3 border-b text-center">Present</th>
+                                            <th class="px-4 py-3 border-b text-center">Absent</th>
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($students as $student)
+                                            <tr class="border-b hover:bg-gray-50">
+                                                <td class="px-4 py-3">{{ $student->roll }}</td>
+                                                <td class="px-4 py-3 font-medium">{{ $student->name }}</td>
+                                                <td class="px-4 py-3 text-center">
+                                                    <input type="radio" name="attendance[{{ $student->id }}]" value="present" class="text-success focus:ring-success" checked required>
+                                                </td>
+                                                <td class="px-4 py-3 text-center">
+                                                    <input type="radio" name="attendance[{{ $student->id }}]" value="absent" class="text-danger focus:ring-danger">
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
 
                             <div class="flex justify-end">
                                 <button type="submit" class="bg-success text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-bold">

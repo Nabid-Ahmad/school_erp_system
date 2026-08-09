@@ -1,8 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Manage Fee Structure') }}
-        </h2>
+        <div class="flex items-center">
+            <a href="{{ route('dashboard') }}" class="text-gray-500 hover:text-gray-700 mr-4">
+                &larr; Back
+            </a>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Manage Fee Structure') }}
+            </h2>
+        </div>
     </x-slot>
 
     <div class="py-12">
@@ -25,7 +30,7 @@
                                 @csrf
                                 <input type="hidden" name="school_class_id" value="{{ $class->id }}">
                                 
-                                <div class="grid grid-cols-2 gap-4 items-end">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-end">
                                     <div>
                                         <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Fee Type</label>
                                         <select name="fee_type" class="w-full rounded-xl border-gray-200 text-sm font-bold p-2.5">

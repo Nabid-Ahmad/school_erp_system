@@ -77,6 +77,13 @@ class SchoolClassController extends Controller
 
     public function destroy(\App\Models\SchoolClass $class)
     {
+        // Deleting a class cascades to students (and their fees/attendance/
+        // results) via the foreign key, so refuse while students still exist.
+        if ($class->students()->exists()) {
+            return redirect()->route('classes.index')
+                ->with('error', 'Cannot delete a class that still has students. Move or remove them first.');
+        }
+
         $class->delete();
         return redirect()->route('classes.index')->with('success', 'Class deleted successfully.');
     }

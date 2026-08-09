@@ -3,23 +3,25 @@
 namespace App\Http\Controllers\System;
 
 use App\Http\Controllers\Controller;
-
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller
 {
     public function index()
     {
         $users = User::all();
+
         return view('users.index', compact('users'));
     }
 
     public function create()
     {
-        $permissions = \Spatie\Permission\Models\Permission::all();
+        $permissions = Permission::all();
+
         return view('users.create', compact('permissions'));
     }
 
@@ -40,6 +42,8 @@ class UserController extends Controller
             'role' => $request->role,
         ]);
 
+        $user->syncRoles([$request->role]);
+
         if ($request->has('permissions')) {
             $user->syncPermissions($request->permissions);
         }
@@ -49,7 +53,8 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        $permissions = \Spatie\Permission\Models\Permission::all();
+        $permissions = Permission::all();
+
         return view('users.edit', compact('user', 'permissions'));
     }
 
@@ -67,6 +72,8 @@ class UserController extends Controller
             'email' => $request->email,
             'role' => $request->role,
         ]);
+
+        $user->syncRoles([$request->role]);
 
         if ($request->has('permissions')) {
             $user->syncPermissions($request->permissions);
@@ -91,8 +98,9 @@ class UserController extends Controller
         if ($user->id === auth()->id()) {
             return redirect()->route('users.index')->with('error', 'You cannot delete yourself!');
         }
-        
+
         $user->delete();
+
         return redirect()->route('users.index')->with('success', 'User deleted successfully.');
     }
 }

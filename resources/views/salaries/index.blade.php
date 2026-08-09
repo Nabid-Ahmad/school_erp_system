@@ -8,6 +8,17 @@
     <div class="py-8 bg-gray-50/50 min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             
+            @if(session('success'))
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-2xl mb-4 font-bold">
+                    {{ session('success') }}
+                </div>
+            @endif
+            @if(session('error'))
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-2xl mb-4 font-bold">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             <!-- Compact Payment Form with Search -->
             <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-gray-100">
                 <h3 class="text-lg font-black text-gray-800 mb-6 flex items-center gap-2">
@@ -84,10 +95,11 @@
                                 <th class="pb-3">Amount</th>
                                 <th class="pb-3">Date</th>
                                 <th class="pb-3 text-right pr-2">Status</th>
+                                <th class="pb-3 text-right pr-2">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-50">
-                            @foreach($salaries as $salary)
+                            @forelse($salaries as $salary)
                                 <tr class="hover:bg-gray-50 transition-colors">
                                     <td class="py-4 pl-2">
                                         <p class="font-black text-gray-800 text-sm">{{ $salary->teacher->name }}</p>
@@ -101,8 +113,25 @@
                                     <td class="py-4 text-right pr-2">
                                         <span class="px-2 py-1 bg-green-100 text-green-600 rounded-md text-[9px] font-black uppercase">Paid</span>
                                     </td>
+                                    <td class="py-4 text-right pr-2">
+                                        <form action="{{ route('salaries.destroy', $salary) }}" method="POST" class="inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-danger hover:underline text-sm" onclick="return confirm('Delete this salary payment and its expense record?')">Delete</button>
+                                        </form>
+                                    </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="py-16 text-center">
+                                        <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center text-gray-300 mx-auto mb-3">
+                                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        </div>
+                                        <p class="font-black text-gray-800">No payments recorded yet</p>
+                                        <p class="text-xs text-gray-400 font-bold mt-1">Use the form above to pay a teacher's salary.</p>
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

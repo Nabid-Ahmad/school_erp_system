@@ -53,7 +53,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="px-4 py-3 text-center text-gray-500">No classes found.</td>
+                                    <td colspan="7" class="px-4 py-3 text-center text-gray-500">No classes found.</td>
                                 </tr>
                             @endforelse
                         </tbody>

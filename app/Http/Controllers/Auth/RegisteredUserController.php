@@ -40,6 +40,9 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            // Self-registered accounts are never admins; an admin can grant
+            // permissions and a different role later via User Management.
+            'role' => 'teacher',
         ]);
 
         event(new Registered($user));

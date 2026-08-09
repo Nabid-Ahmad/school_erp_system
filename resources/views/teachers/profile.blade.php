@@ -1,9 +1,14 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Teacher Profile') }}
-            </h2>
+            <div class="flex items-center">
+                <a href="{{ route('teachers.index') }}" class="text-gray-500 hover:text-gray-700 mr-4">
+                    &larr; Back
+                </a>
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    {{ __('Teacher Profile') }}
+                </h2>
+            </div>
             <a href="{{ route('teachers.id-card', $teacher->id) }}" target="_blank" class="bg-deep-green text-white px-6 py-2 rounded-xl font-bold shadow-lg shadow-green-900/20 hover:scale-105 transition-all text-sm">
                 Generate ID Card
             </a>
