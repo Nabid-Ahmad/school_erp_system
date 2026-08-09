@@ -26,7 +26,7 @@
                             @enderror
                         </div>
 
-                        <div class="grid grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-sm font-black text-gray-400 uppercase tracking-widest mb-2">Amount (৳)</label>
                                 <input type="number" step="0.01" name="amount" value="{{ old('amount', $expense->amount) }}" class="w-full bg-gray-50 border-none rounded-xl p-4 focus:ring-2 focus:ring-red-500 font-bold @error('amount') ring-2 ring-red-400 @enderror" required>

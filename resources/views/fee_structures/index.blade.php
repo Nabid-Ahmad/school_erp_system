@@ -30,7 +30,7 @@
                                 @csrf
                                 <input type="hidden" name="school_class_id" value="{{ $class->id }}">
                                 
-                                <div class="grid grid-cols-2 gap-4 items-end">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-end">
                                     <div>
                                         <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Fee Type</label>
                                         <select name="fee_type" class="w-full rounded-xl border-gray-200 text-sm font-bold p-2.5">
