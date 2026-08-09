@@ -83,7 +83,8 @@
                     Recent Payments
                 </h4>
                 <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
-                    <table class="w-full text-left">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
                         <thead>
                             <tr class="bg-gray-50 text-gray-400 text-xs uppercase tracking-widest">
                                 <th class="px-6 py-4">Date</th>
@@ -110,6 +111,7 @@
                             @endforelse
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
         </div>

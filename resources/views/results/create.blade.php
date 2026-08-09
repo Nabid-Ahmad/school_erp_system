@@ -55,26 +55,28 @@
                             @csrf
                             <input type="hidden" name="subject_id" value="{{ $selected_subject }}">
                             
-                            <table class="w-full text-left border-collapse mb-6">
-                                <thead>
-                                    <tr class="bg-gray-100 text-gray-700">
-                                        <th class="px-4 py-3 border-b">Roll</th>
-                                        <th class="px-4 py-3 border-b">Student Name</th>
-                                        <th class="px-4 py-3 border-b">Marks (0-100)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($students as $student)
-                                        <tr class="border-b hover:bg-gray-50">
-                                            <td class="px-4 py-3">{{ $student->roll }}</td>
-                                            <td class="px-4 py-3 font-medium">{{ $student->name }}</td>
-                                            <td class="px-4 py-3">
-                                                <input type="number" name="marks[{{ $student->id }}]" min="0" max="100" class="block w-24 rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm" placeholder="Mark">
-                                            </td>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse mb-6">
+                                    <thead>
+                                        <tr class="bg-gray-100 text-gray-700">
+                                            <th class="px-4 py-3 border-b">Roll</th>
+                                            <th class="px-4 py-3 border-b">Student Name</th>
+                                            <th class="px-4 py-3 border-b">Marks (0-100)</th>
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($students as $student)
+                                            <tr class="border-b hover:bg-gray-50">
+                                                <td class="px-4 py-3">{{ $student->roll }}</td>
+                                                <td class="px-4 py-3 font-medium">{{ $student->name }}</td>
+                                                <td class="px-4 py-3">
+                                                    <input type="number" name="marks[{{ $student->id }}]" min="0" max="100" class="block w-24 rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm" placeholder="Mark">
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
 
                             <div class="flex justify-end">
                                 <button type="submit" class="bg-success text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-bold">
