@@ -38,16 +38,24 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    $totalStudents = Student::count();
-    $totalTeachers = Teacher::count();
-    $todayAttendance = Attendance::whereDate('date', now())->where('status', 'present')->count();
-    $monthlyFees = Fee::where('status', 'paid')
-        ->where('month', now()->format('F'))
-        ->where('year', (string) now()->year)
-        ->sum('amount');
-    $monthlyExpenses = Expense::whereYear('date', now()->year)
-        ->whereMonth('date', now()->month)
-        ->sum('amount');
+    $user = auth()->user();
+
+    $totalStudents = $user->can('manage students') ? Student::count() : null;
+    $totalTeachers = $user->can('manage teachers') ? Teacher::count() : null;
+    $todayAttendance = $user->can('manage attendances') ? Attendance::whereDate('date', now())->where('status', 'present')->count() : null;
+
+    $canViewFinance = $user->can('manage fees') || $user->can('manage expenses') || $user->role === 'admin';
+    $monthlyFees = $canViewFinance
+        ? Fee::where('status', 'paid')
+            ->where('month', now()->format('F'))
+            ->where('year', (string) now()->year)
+            ->sum('amount')
+        : null;
+    $monthlyExpenses = $canViewFinance
+        ? Expense::whereYear('date', now()->year)
+            ->whereMonth('date', now()->month)
+            ->sum('amount')
+        : null;
 
     return view('dashboard', compact('totalStudents', 'totalTeachers', 'todayAttendance', 'monthlyFees', 'monthlyExpenses'));
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -67,22 +75,26 @@ Route::middleware('auth')->group(function () {
 
     // Admin Only (Super Admin)
     Route::middleware('role:admin')->group(function () {
-        Route::resource('users', UserController::class);
+        Route::resource('users', UserController::class)
+            ->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
         Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
         Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
     });
 
     // Permission Based Routes
     Route::middleware('can:manage classes')->group(function () {
-        Route::resource('classes', SchoolClassController::class);
+        Route::resource('classes', SchoolClassController::class)
+            ->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
     });
 
     Route::middleware('can:manage subjects')->group(function () {
-        Route::resource('subjects', SubjectController::class);
+        Route::resource('subjects', SubjectController::class)
+            ->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
     });
 
     Route::middleware('can:manage teachers')->group(function () {
-        Route::resource('teachers', TeacherController::class);
+        Route::resource('teachers', TeacherController::class)
+            ->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
         Route::get('/teachers/{teacher}', [TeacherProfileController::class, 'show'])->name('teachers.show');
         Route::get('/teachers/{teacher}/id-card', [TeacherProfileController::class, 'idCard'])->name('teachers.id-card');
     });
@@ -91,26 +103,33 @@ Route::middleware('auth')->group(function () {
         Route::resource('students', StudentController::class);
         Route::get('/students/{student}/id-card', [StudentController::class, 'generateIDCard'])->name('students.id-card');
         Route::get('/students/{student}/dues', [StudentController::class, 'dues'])->name('students.dues');
-        Route::get('/api/students/find/{roll}', [StudentController::class, 'apiFind'])->name('api.students.find');
     });
 
+    Route::get('/api/students/find/{roll}', [StudentController::class, 'apiFind'])
+        ->middleware('canManageStudentsOrFees')
+        ->name('api.students.find');
+
     Route::middleware('can:manage fees')->group(function () {
-        Route::resource('fees', FeeController::class);
+        Route::resource('fees', FeeController::class)
+            ->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
         Route::get('/fees/{fee}/receipt', [FeeController::class, 'downloadReceipt'])->name('fees.receipt');
         Route::get('/fee-structures', [FeeStructureController::class, 'index'])->name('fee-structures.index');
         Route::post('/fee-structures', [FeeStructureController::class, 'store'])->name('fee-structures.store');
     });
 
     Route::middleware('can:manage galleries')->group(function () {
-        Route::resource('galleries', GalleryController::class);
+        Route::resource('galleries', GalleryController::class)
+            ->only(['index', 'create', 'store', 'destroy']);
     });
 
     Route::middleware('can:manage events')->group(function () {
-        Route::resource('events', EventController::class);
+        Route::resource('events', EventController::class)
+            ->only(['index', 'create', 'store', 'show', 'destroy']);
     });
 
     Route::middleware('can:manage expenses')->group(function () {
-        Route::resource('expenses', ExpenseController::class);
+        Route::resource('expenses', ExpenseController::class)
+            ->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
     });
 
     Route::middleware('can:manage promotions')->group(function () {
@@ -126,11 +145,13 @@ Route::middleware('auth')->group(function () {
 
     // Admin, Staff (with permission) & Teacher Routes
     Route::middleware('role:admin,teacher,manage attendances')->group(function () {
-        Route::resource('attendances', AttendanceController::class);
+        Route::resource('attendances', AttendanceController::class)
+            ->only(['index', 'create', 'store']);
     });
 
     Route::middleware('role:admin,teacher,manage results')->group(function () {
-        Route::resource('results', ResultController::class);
+        Route::resource('results', ResultController::class)
+            ->only(['index', 'create', 'store']);
     });
 });
 

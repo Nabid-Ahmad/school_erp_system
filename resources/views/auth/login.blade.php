@@ -47,9 +47,6 @@
     </form>
 
     <p class="mt-6 text-center text-sm text-gray-600">
-        {{ __('Don\'t have an account?') }}
-        <a href="{{ route('register') }}" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            {{ __('Register') }}
-        </a>
+        {{ __('Accounts are created by the school administrator.') }}
     </p>
 </x-guest-layout>
