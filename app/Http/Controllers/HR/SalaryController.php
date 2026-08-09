@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Expense;
 use App\Models\Salary;
 use App\Models\Teacher;
+use App\Services\NotificationService;
 use App\Services\SalaryDuesService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -72,6 +73,12 @@ class SalaryController extends Controller
 
             return redirect()->back()->with('error', 'Could not save the salary payment. Please try again.');
         }
+
+        NotificationService::toAdmins(
+            'Salary Paid',
+            "{$salary->teacher->name} received ৳".number_format($salary->amount, 2)." for {$salary->month} {$salary->year}.",
+            route('salaries.index')
+        );
 
         return redirect()->back()->with('success', 'Salary paid and recorded as expense.');
     }
