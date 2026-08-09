@@ -68,7 +68,7 @@
                 <div class="space-y-6">
                     <div class="bg-gradient-to-br from-green-700 to-green-600 p-8 rounded-[2.5rem] text-white shadow-xl shadow-green-200 relative overflow-hidden">
                         <p class="text-[10px] font-black uppercase tracking-widest opacity-90 mb-2 drop-shadow-sm">Monthly Net Profit</p>
-                        <h3 class="text-4xl font-black italic tracking-tight drop-shadow-md">৳{{ number_format($monthlyFees - $totalExpenses, 2) }}</h3>
+                        <h3 class="text-4xl font-black italic tracking-tight drop-shadow-md">৳{{ number_format($monthlyFees - $monthlyExpenses, 2) }}</h3>
                         <div class="mt-6 pt-6 border-t border-white/20 flex justify-between items-end">
                             <div>
                                 <p class="text-[10px] font-bold uppercase opacity-80 drop-shadow-sm">Revenue</p>
@@ -76,7 +76,7 @@
                             </div>
                             <div class="text-right">
                                 <p class="text-[10px] font-bold uppercase opacity-80 drop-shadow-sm">Expenses</p>
-                                <p class="text-lg font-black text-red-200 drop-shadow-sm">৳{{ number_format($totalExpenses, 2) }}</p>
+                                <p class="text-lg font-black text-red-200 drop-shadow-sm">৳{{ number_format($monthlyExpenses, 2) }}</p>
                             </div>
                         </div>
                     </div>
@@ -152,7 +152,7 @@
                         labels: ['Income', 'Expenses'],
                         datasets: [{
                             label: '৳',
-                            data: [{{ $monthlyFees }}, {{ $totalExpenses }}],
+                            data: [{{ $monthlyFees }}, {{ $monthlyExpenses }}],
                             backgroundColor: ['#15803d', '#ef4444'],
                             borderRadius: 15,
                             barThickness: 50

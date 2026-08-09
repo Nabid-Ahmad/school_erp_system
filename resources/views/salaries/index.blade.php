@@ -8,6 +8,17 @@
     <div class="py-8 bg-gray-50/50 min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             
+            @if(session('success'))
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-2xl mb-4 font-bold">
+                    {{ session('success') }}
+                </div>
+            @endif
+            @if(session('error'))
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-2xl mb-4 font-bold">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             <!-- Compact Payment Form with Search -->
             <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-gray-100">
                 <h3 class="text-lg font-black text-gray-800 mb-6 flex items-center gap-2">
@@ -84,6 +95,7 @@
                                 <th class="pb-3">Amount</th>
                                 <th class="pb-3">Date</th>
                                 <th class="pb-3 text-right pr-2">Status</th>
+                                <th class="pb-3 text-right pr-2">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-50">
@@ -100,6 +112,13 @@
                                     <td class="py-4 text-xs text-gray-500 font-bold">{{ \Carbon\Carbon::parse($salary->payment_date)->format('d M, Y') }}</td>
                                     <td class="py-4 text-right pr-2">
                                         <span class="px-2 py-1 bg-green-100 text-green-600 rounded-md text-[9px] font-black uppercase">Paid</span>
+                                    </td>
+                                    <td class="py-4 text-right pr-2">
+                                        <form action="{{ route('salaries.destroy', $salary) }}" method="POST" class="inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-danger hover:underline text-sm" onclick="return confirm('Delete this salary payment and its expense record?')">Delete</button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

@@ -139,12 +139,9 @@
                             <div class="mb-4">
                                 <label for="fee_type" class="block text-sm font-medium text-gray-700">Fee Type</label>
                                 <select name="fee_type" id="fee_type" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm" required>
-                                    <option value="Monthly Fee" {{ request('type') == 'Monthly Fee' ? 'selected' : '' }}>Monthly Fee</option>
-                                    <option value="Admission Fee" {{ request('type') == 'Admission Fee' ? 'selected' : '' }}>Admission Fee</option>
-                                    <option value="Exam Fee">Exam Fee</option>
-                                    <option value="Uniform Fee">Uniform Fee</option>
-                                    <option value="Transport Fee">Transport Fee</option>
-                                    <option value="Other">Other</option>
+                                    @foreach(\App\Services\FeeDuesService::FEE_TYPES as $type)
+                                        <option value="{{ $type }}" {{ request('type') == $type ? 'selected' : '' }}>{{ $type }}</option>
+                                    @endforeach
                                 </select>
                                 @error('fee_type')
                                     <p class="text-danger text-xs mt-1">{{ $message }}</p>
