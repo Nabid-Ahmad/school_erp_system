@@ -45,4 +45,8 @@
             </x-primary-button>
         </div>
     </form>
+
+    <p class="mt-6 text-center text-sm text-gray-600">
+        {{ __('Accounts are created by the school administrator.') }}
+    </p>
 </x-guest-layout>

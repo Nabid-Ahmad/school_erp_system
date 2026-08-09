@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Finance;
 
 use App\Http\Controllers\Controller;
-
 use App\Models\Expense;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 
 class ExpenseController extends Controller
@@ -13,6 +13,7 @@ class ExpenseController extends Controller
     {
         $expenses = Expense::latest()->paginate(20);
         $totalExpenses = Expense::sum('amount');
+
         return view('expenses.index', compact('expenses', 'totalExpenses'));
     }
 
@@ -32,6 +33,12 @@ class ExpenseController extends Controller
         ]);
 
         Expense::create($validated);
+
+        NotificationService::toAdmins(
+            'Expense Recorded',
+            "{$validated['title']} — ৳".number_format($validated['amount'], 2).'.',
+            route('expenses.index')
+        );
 
         return redirect()->route('expenses.index')->with('success', 'Expense recorded successfully.');
     }
@@ -59,6 +66,7 @@ class ExpenseController extends Controller
     public function destroy(Expense $expense)
     {
         $expense->delete();
+
         return redirect()->route('expenses.index')->with('success', 'Expense deleted successfully.');
     }
 }

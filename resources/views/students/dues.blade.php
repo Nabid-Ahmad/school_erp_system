@@ -28,8 +28,12 @@
                     <h3 class="text-2xl font-black text-gray-800">{{ $student->name }}</h3>
                     <p class="text-gray-400 font-bold">Roll: {{ $student->roll }} | Class: {{ $student->schoolClass->name ?? 'N/A' }}</p>
                     <div class="mt-2 flex gap-4 text-sm font-bold">
-                        <span class="text-green-600">Monthly Fee: ৳{{ number_format($student->schoolClass->monthly_fee ?? 0, 2) }}</span>
-                        <span class="text-blue-600">Admission Fee: ৳{{ number_format($student->schoolClass->admission_fee ?? 0, 2) }}</span>
+                        @php
+                            $monthlyFeeAmount = $student->schoolClass->feeStructures->where('fee_type', 'Monthly Fee')->first()->amount ?? 0;
+                            $admissionFeeAmount = $student->schoolClass->feeStructures->where('fee_type', 'Admission Fee')->first()->amount ?? 0;
+                        @endphp
+                        <span class="text-green-600">Monthly Fee: ৳{{ number_format($monthlyFeeAmount, 2) }}</span>
+                        <span class="text-blue-600">Admission Fee: ৳{{ number_format($admissionFeeAmount, 2) }}</span>
                     </div>
                 </div>
             </div>
@@ -79,7 +83,8 @@
                     Recent Payments
                 </h4>
                 <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
-                    <table class="w-full text-left">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
                         <thead>
                             <tr class="bg-gray-50 text-gray-400 text-xs uppercase tracking-widest">
                                 <th class="px-6 py-4">Date</th>
@@ -89,16 +94,24 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-50">
-                            @foreach($student->fees->where('status', 'paid')->sortByDesc('created_at')->take(5) as $fee)
+                            @forelse($student->fees->where('status', 'paid')->sortByDesc('created_at')->take(5) as $fee)
                                 <tr class="text-sm">
                                     <td class="px-6 py-4 text-gray-500">{{ $fee->created_at->format('d M Y') }}</td>
                                     <td class="px-6 py-4 font-bold text-gray-800">{{ $fee->fee_type }}</td>
                                     <td class="px-6 py-4 text-gray-500">{{ $fee->month }}</td>
                                     <td class="px-6 py-4 text-right font-black text-green-600">৳{{ number_format($fee->amount, 2) }}</td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="4" class="px-6 py-12 text-center">
+                                        <p class="font-bold text-gray-800">No payments yet</p>
+                                        <p class="text-xs text-gray-400 mt-1">Payments made by this student will appear here.</p>
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
         </div>
