@@ -61,7 +61,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="px-4 py-3 text-center text-gray-500">No teachers found.</td>
+                                    <td colspan="6" class="px-4 py-3 text-center text-gray-500">No teachers found.</td>
                                 </tr>
                             @endforelse
                         </tbody>

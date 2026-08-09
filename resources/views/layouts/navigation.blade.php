@@ -12,23 +12,10 @@
                         <span class="text-lg font-black text-purple-800 tracking-tight">Bangla<span class="text-purple-500">Model</span></span>
                     </a>
                 </div>
-
-                <!-- Global Search (Visual Only) -->
-                <div class="hidden md:flex items-center bg-purple-50 border border-purple-100 rounded-2xl px-4 py-2 w-64 focus-within:ring-2 focus-within:ring-purple-300 focus-within:bg-white transition-all">
-                    <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                    <input type="text" class="bg-transparent border-none focus:ring-0 text-xs font-bold text-purple-700 placeholder-purple-300 w-full" placeholder="Search anything...">
-                </div>
             </div>
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <div class="flex items-center gap-4 mr-6">
-                    <button class="p-2 text-purple-400 hover:text-purple-600 transition-colors relative">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
-                        <span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
-                    </button>
-                </div>
-
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="flex items-center gap-3 p-1 pr-3 rounded-2xl hover:bg-purple-50 transition-all border border-transparent hover:border-purple-100">

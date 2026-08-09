@@ -66,7 +66,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="px-4 py-3 text-center text-gray-500">No students found.</td>
+                                    <td colspan="6" class="px-4 py-3 text-center text-gray-500">No students found.</td>
                                 </tr>
                             @endforelse
                         </tbody>

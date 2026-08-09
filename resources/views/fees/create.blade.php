@@ -48,8 +48,7 @@
                         <script>
                             let currentStudentFees = {};
 
-                            document.getElementById('roll_search').addEventListener('input', function() {
-                                let roll = this.value;
+                            function runRollSearch(roll) {
                                 let status = document.getElementById('search_status');
                                 let nameDisplay = document.getElementById('student_name_display');
                                 let studentIdInput = document.getElementById('student_id');
@@ -72,7 +71,7 @@
                                                 status.classList.add('text-green-500');
 
                                                 currentStudentFees = data.class_structure || {};
-                                                
+
                                                 // Auto-fill amount for current fee type
                                                 if (currentStudentFees[feeTypeSelect.value]) {
                                                     amountInput.value = currentStudentFees[feeTypeSelect.value];
@@ -114,6 +113,10 @@
                                     duesBox.classList.add('hidden');
                                     currentStudentFees = {};
                                 }
+                            }
+
+                            document.getElementById('roll_search').addEventListener('input', function() {
+                                runRollSearch(this.value);
                             });
 
                             // Auto-update amount when fee type changes
@@ -123,6 +126,15 @@
                                     amountInput.value = currentStudentFees[this.value];
                                 } else {
                                     amountInput.value = '';
+                                }
+                            });
+
+                            // When arriving with a pre-filled roll (e.g. "Pay Now" from dues),
+                            // run the lookup immediately so student_id is populated.
+                            window.addEventListener('DOMContentLoaded', function() {
+                                let rollInput = document.getElementById('roll_search');
+                                if (rollInput && rollInput.value) {
+                                    runRollSearch(rollInput.value);
                                 }
                             });
                         </script>

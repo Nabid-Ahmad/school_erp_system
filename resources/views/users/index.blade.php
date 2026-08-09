@@ -12,6 +12,19 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
+            @if(session('success'))
+                <div class="mb-6 p-4 bg-green-50 border border-green-200 text-green-700 rounded-2xl font-bold text-sm">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-2xl font-bold text-sm">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-2xl">
                 <div class="p-6 text-gray-900">
                     <div class="overflow-x-auto">
@@ -25,7 +38,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($users as $user)
+                                @forelse($users as $user)
                                 <tr class="border-b hover:bg-gray-50 transition">
                                     <td class="px-4 py-4 font-bold text-gray-700">{{ $user->name }}</td>
                                     <td class="px-4 py-4 text-gray-500">{{ $user->email }}</td>
@@ -49,7 +62,17 @@
                                         @endif
                                     </td>
                                 </tr>
-                                @endforeach
+                                @empty
+                                <tr>
+                                    <td colspan="4" class="px-4 py-16 text-center">
+                                        <div class="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center text-gray-300 mx-auto mb-4">
+                                            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                                        </div>
+                                        <h5 class="text-xl font-black text-gray-800">No Users Found</h5>
+                                        <p class="text-gray-400 mt-1">Create your first user to get started.</p>
+                                    </td>
+                                </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
