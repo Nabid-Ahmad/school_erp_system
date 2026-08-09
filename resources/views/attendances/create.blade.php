@@ -45,6 +45,7 @@
                         <form action="{{ route('attendances.store') }}" method="POST">
                             @csrf
                             <input type="hidden" name="date" value="{{ $selected_date }}">
+                            <input type="hidden" name="class_id" value="{{ $selected_class }}">
                             
                             <div class="overflow-x-auto">
                                 <table class="w-full text-left border-collapse mb-6">

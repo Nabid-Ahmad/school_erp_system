@@ -9,7 +9,7 @@ use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,21 +23,47 @@ class DatabaseSeeder extends Seeder
         // Run Permissions first
         $this->call(PermissionSeeder::class);
 
-        // 1. Create Admin User
-        $adminEmail = env('ADMIN_EMAIL', 'admin@school.com');
-        $adminPassword = env('ADMIN_PASSWORD', Str::random(32));
-
-        User::updateOrCreate(
-            ['email' => $adminEmail],
+        // 1. Create Demo Users (one per role)
+        $demoUsers = [
             [
-                'name' => 'Admin User',
-                'password' => bcrypt($adminPassword),
+                'name' => 'Super Admin',
+                'email' => env('ADMIN_EMAIL', 'admin@school.com'),
+                'password' => env('ADMIN_PASSWORD', 'admin1234'),
                 'role' => 'admin',
-            ]
-        );
+            ],
+            [
+                'name' => 'Demo Teacher',
+                'email' => 'teacher@school.com',
+                'password' => 'teacher1234',
+                'role' => 'teacher',
+            ],
+            [
+                'name' => 'Demo Staff',
+                'email' => 'staff@school.com',
+                'password' => 'staff1234',
+                'role' => 'staff',
+            ],
+        ];
+
+        foreach ($demoUsers as $demoUser) {
+            $user = User::updateOrCreate(
+                ['email' => $demoUser['email']],
+                [
+                    'name' => $demoUser['name'],
+                    'password' => bcrypt($demoUser['password']),
+                    'role' => $demoUser['role'],
+                ]
+            );
+
+            // Keep the Spatie role in sync with the role column so that the
+            // role-based routes and the permission-based sidebar agree.
+            if (Role::where('name', $demoUser['role'])->exists()) {
+                $user->syncRoles([$demoUser['role']]);
+            }
+        }
 
         if (! env('ADMIN_PASSWORD') && app()->environment('production')) {
-            Log::warning('ADMIN_PASSWORD is not set. An admin password was generated randomly.');
+            Log::warning('ADMIN_PASSWORD is not set. Falling back to the default demo password.');
         }
 
         // 2. Create Classes
