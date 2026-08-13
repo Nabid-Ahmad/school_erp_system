@@ -34,9 +34,11 @@ class StudentController extends Controller
     {
         $student->load('schoolClass');
         $pdf = Pdf::loadView('students.id_card', compact('student'))
-            ->setPaper([0, 0, 204, 324], 'portrait'); // Standard CR80 size (approx)
+            ->setOption('isRemoteEnabled', true)
+            ->setOption('isHtml5ParserEnabled', true)
+            ->setPaper([0, 0, 216, 342], 'portrait');
 
-        return $pdf->download('ID-Card-'.$student->roll.'.pdf');
+        return $pdf->stream('ID-Card-'.$student->roll.'.pdf');
     }
 
     public function create()
