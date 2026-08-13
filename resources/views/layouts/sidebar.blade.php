@@ -15,6 +15,12 @@
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
                 <span>Dashboard</span>
             </a>
+
+            <!-- Reports Center -->
+            <a href="{{ route('reports.index') }}" class="flex items-center gap-3 px-6 py-3 transition-colors hover:bg-purple-700 {{ request()->routeIs('reports.*') ? 'bg-purple-700 border-l-4 border-white font-bold' : 'font-medium opacity-90 hover:opacity-100 border-l-4 border-transparent' }}">
+                <svg class="w-5 h-5 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                <span>Reports Center</span>
+            </a>
             
             <!-- Master Data -->
             @canany(['manage classes', 'manage subjects', 'manage teachers', 'manage students'])
@@ -71,6 +77,12 @@
                 <span>Promotions</span>
             </a>
             @endcan
+            @canany(['manage fees', 'manage expenses'])
+            <a href="{{ route('accounts.index') }}" class="flex items-center gap-3 px-6 py-3 transition-colors hover:bg-purple-700 {{ request()->routeIs('accounts.*') ? 'bg-purple-700 border-l-4 border-white font-bold' : 'font-medium opacity-90 hover:opacity-100 border-l-4 border-transparent' }}">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                <span>Accounts Overview</span>
+            </a>
+            @endcanany
             @can('manage fees')
             <a href="{{ route('fees.index') }}" class="flex items-center gap-3 px-6 py-3 transition-colors hover:bg-purple-700 {{ request()->routeIs('fees.*') ? 'bg-purple-700 border-l-4 border-white font-bold' : 'font-medium opacity-90 hover:opacity-100 border-l-4 border-transparent' }}">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>

@@ -21,7 +21,10 @@ class TeacherProfileController extends Controller
 
     public function idCard(Teacher $teacher)
     {
-        $pdf = Pdf::loadView('teachers.id_card_pdf', compact('teacher'));
+        $pdf = Pdf::loadView('teachers.id_card_pdf', compact('teacher'))
+            ->setOption('isRemoteEnabled', true)
+            ->setOption('isHtml5ParserEnabled', true)
+            ->setPaper([0, 0, 216, 342], 'portrait');
 
         return $pdf->stream($teacher->name.'_ID_Card.pdf');
     }

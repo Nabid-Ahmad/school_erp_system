@@ -4,75 +4,300 @@
     <meta charset="utf-8">
     <title>Student ID Card</title>
     <style>
-        @page { margin: 0px; }
-        body { margin: 0px; padding: 0px; font-family: 'Helvetica', sans-serif; background: white; }
-        .id-card { width: 204pt; height: 324pt; border: none; position: relative; overflow: hidden; margin: 0 auto; }
-        .header { background: #15803d; height: 80px; text-align: center; color: white; padding-top: 15px; }
-        .school-name { font-size: 14px; font-weight: bold; margin: 0; text-transform: uppercase; }
-        .school-subtitle { font-size: 7px; opacity: 0.8; margin-top: 3px; }
+        @page {
+            size: 216pt 342pt;
+            margin: 0px;
+        }
+        * {
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+        }
+        html, body {
+            width: 216pt;
+            height: 342pt;
+            margin: 0px;
+            padding: 0px;
+            font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+            background: #ffffff;
+            overflow: hidden;
+            -webkit-print-color-adjust: exact;
+        }
+        .id-card {
+            width: 216pt;
+            height: 342pt;
+            position: relative;
+            background: #ffffff;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            page-break-inside: avoid;
+            page-break-after: avoid;
+        }
         
-        .photo-area { text-align: center; margin-top: -40px; }
-        .photo { width: 80px; height: 80px; border-radius: 50%; border: 4px solid white; object-fit: cover; background: #eee; }
-        
-        .student-info { text-align: center; margin-top: 10px; padding: 0 20px; }
-        .student-name { font-size: 14px; font-weight: 800; color: #333; margin: 5px 0; text-transform: uppercase; }
-        .student-roll { font-size: 10px; color: #15803d; font-weight: bold; margin-bottom: 15px; }
-        
-        .details-table { width: 100%; margin-top: 10px; font-size: 9px; }
-        .details-table td { padding: 4px 0; vertical-align: top; }
-        .label { font-weight: bold; color: #666; width: 60px; text-align: left; }
-        .value { color: #333; font-weight: bold; }
-        
-        .footer { position: absolute; bottom: 0; width: 100%; background: #15803d; color: white; text-align: center; font-size: 8px; padding: 5px 0; }
-        .signature { position: absolute; bottom: 40px; right: 20px; text-align: center; }
-        .sign-line { border-top: 1px solid #333; width: 60px; margin-top: 20px; }
-        .sign-text { font-size: 7px; color: #666; margin-top: 2px; }
+        /* Premium Header Banner */
+        .header {
+            background: #0f172a;
+            height: 90pt;
+            text-align: center;
+            color: #ffffff;
+            padding-top: 12pt;
+            position: relative;
+            border-bottom: 3.5pt solid #fbbf24;
+        }
+        .school-name {
+            font-size: 11pt;
+            font-weight: 900;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.8pt;
+            color: #ffffff;
+            line-height: 1.15;
+            padding: 0 8pt;
+        }
+        .est-text {
+            font-size: 5.5pt;
+            font-weight: 800;
+            color: #fbbf24;
+            letter-spacing: 1.5pt;
+            text-transform: uppercase;
+            margin-top: 3pt;
+        }
+
+        /* Photo Area */
+        .photo-area {
+            position: absolute;
+            top: 58pt;
+            left: 50%;
+            margin-left: -38pt;
+            width: 76pt;
+            height: 76pt;
+            border-radius: 18pt;
+            border: 3.5pt solid #ffffff;
+            background: #f1f5f9;
+            overflow: hidden;
+            text-align: center;
+            z-index: 10;
+        }
+        .photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .photo-placeholder {
+            width: 100%;
+            height: 100%;
+            background: #1e3a8a;
+            color: #ffffff;
+            font-size: 28pt;
+            font-weight: 900;
+            line-height: 76pt;
+            text-align: center;
+        }
+
+        /* Main Body Content */
+        .card-body {
+            margin-top: 48pt;
+            padding: 0 14pt;
+            text-align: center;
+        }
+        .student-name {
+            font-size: 13pt;
+            font-weight: 900;
+            color: #0f172a;
+            margin: 0 0 3pt 0;
+            line-height: 1.15;
+            text-transform: capitalize;
+        }
+        .class-pill {
+            display: inline-block;
+            font-size: 7.5pt;
+            font-weight: 900;
+            color: #1e40af;
+            text-transform: uppercase;
+            letter-spacing: 0.8pt;
+            background: #eff6ff;
+            padding: 2.5pt 10pt;
+            border-radius: 6pt;
+            border: 0.5pt solid #bfdbfe;
+            margin-bottom: 8pt;
+        }
+
+        /* Info List Table */
+        .info-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 3.5pt;
+            font-size: 8pt;
+            text-align: left;
+        }
+        .info-row {
+            background: #f8fafc;
+        }
+        .info-cell-label {
+            padding: 3.5pt 8pt;
+            font-size: 5.5pt;
+            font-weight: 900;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.6pt;
+            width: 44%;
+            background: #f1f5f9;
+            border-top-left-radius: 5pt;
+            border-bottom-left-radius: 5pt;
+        }
+        .info-cell-val {
+            padding: 3.5pt 8pt;
+            font-size: 7.5pt;
+            font-weight: 900;
+            color: #0f172a;
+            text-align: right;
+            border-top-right-radius: 5pt;
+            border-bottom-right-radius: 5pt;
+            background: #f8fafc;
+        }
+
+        /* Bottom Section: Signature & Barcode */
+        .bottom-section {
+            position: absolute;
+            bottom: 14pt;
+            left: 14pt;
+            right: 14pt;
+            height: 38pt;
+        }
+        .barcode-box {
+            float: left;
+            width: 58%;
+            text-align: left;
+        }
+        .barcode-lines {
+            font-family: 'Courier', monospace;
+            font-size: 9.5pt;
+            font-weight: 900;
+            letter-spacing: 1.4pt;
+            color: #0f172a;
+            line-height: 1;
+            margin-bottom: 2pt;
+        }
+        .barcode-subtext {
+            font-size: 6pt;
+            font-weight: 900;
+            color: #64748b;
+            letter-spacing: 0.6pt;
+        }
+        .signature-box {
+            float: right;
+            width: 38%;
+            text-align: center;
+        }
+        .sign-line {
+            border-top: 1pt solid #94a3b8;
+            margin-top: 16pt;
+            margin-bottom: 2pt;
+        }
+        .sign-title {
+            font-size: 5.5pt;
+            font-weight: 900;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 0.5pt;
+        }
     </style>
 </head>
 <body>
+    @php
+        $imageSrc = null;
+        $rawImage = $student->image ?? null;
+        if ($rawImage) {
+            if (filter_var($rawImage, FILTER_VALIDATE_URL) || str_starts_with($rawImage, 'http://') || str_starts_with($rawImage, 'https://')) {
+                try {
+                    $ctx = stream_context_create([
+                        "ssl" => [
+                            "verify_peer" => false,
+                            "verify_peer_name" => false,
+                        ],
+                        "http" => [
+                            "timeout" => 5,
+                        ]
+                    ]);
+                    $imageData = @file_get_contents($rawImage, false, $ctx);
+                    if ($imageData !== false) {
+                        $ext = pathinfo(parse_url($rawImage, PHP_URL_PATH), PATHINFO_EXTENSION) ?: 'jpeg';
+                        $imageSrc = 'data:image/' . $ext . ';base64,' . base64_encode($imageData);
+                    } else {
+                        $imageSrc = $rawImage;
+                    }
+                } catch (\Throwable $e) {
+                    $imageSrc = $rawImage;
+                }
+            } else {
+                $cleanPath = ltrim(str_replace(['public/', 'storage/', '/storage/'], '', $rawImage), '/');
+                $possiblePaths = [
+                    public_path('storage/' . $cleanPath),
+                    public_path($cleanPath),
+                    storage_path('app/public/' . $cleanPath),
+                ];
+                foreach ($possiblePaths as $p) {
+                    if (file_exists($p) && is_file($p)) {
+                        $ext = strtolower(pathinfo($p, PATHINFO_EXTENSION));
+                        $mime = ($ext === 'png') ? 'image/png' : (($ext === 'webp') ? 'image/webp' : 'image/jpeg');
+                        $data = file_get_contents($p);
+                        $imageSrc = 'data:' . $mime . ';base64,' . base64_encode($data);
+                        break;
+                    }
+                }
+            }
+        }
+    @endphp
+
     <div class="id-card">
+        <!-- Premium Header Section -->
         <div class="header">
-            <h1 class="school-name">{{ $schoolSettings['school_name'] ?? 'Bangla Model School' }}</h1>
-            <p class="school-subtitle">EXCELLENCE IN EDUCATION</p>
+            <div class="school-name">{{ $schoolSettings['school_name'] ?? 'Bangla Model School' }}</div>
+            <div class="est-text">EXCELLENCE IN EDUCATION • EST. 1995</div>
         </div>
 
+        <!-- Photo Frame -->
         <div class="photo-area">
-            @if($student->image)
-                <img src="{{ public_path('storage/' . $student->image) }}" class="photo">
-            @elseif(isset($schoolSettings['school_logo']))
-                <img src="{{ public_path('storage/' . $schoolSettings['school_logo']) }}" class="photo">
+            @if($imageSrc)
+                <img src="{{ $imageSrc }}" class="photo">
             @else
-                <div class="photo" style="display: flex; align-items: center; justify-content: center; background: #ddd; margin: auto;">PHOTO</div>
+                <div class="photo-placeholder">
+                    {{ strtoupper(substr($student->name, 0, 1)) }}
+                </div>
             @endif
         </div>
 
-        <div class="student-info">
-            <h2 class="student-name">{{ $student->name }}</h2>
-            <div class="student-roll">ROLL: {{ $student->roll }}</div>
+        <!-- Body Section -->
+        <div class="card-body">
+            <h1 class="student-name">{{ $student->name }}</h1>
+            <div class="class-pill">Class {{ $student->schoolClass->name ?? 'N/A' }}</div>
 
-            <table class="details-table">
-                <tr>
-                    <td class="label">Class:</td>
-                    <td class="value">Class {{ $student->schoolClass->name }}</td>
+            <table class="info-table">
+                <tr class="info-row">
+                    <td class="info-cell-label">Roll Number</td>
+                    <td class="info-cell-val">{{ $student->roll }}</td>
                 </tr>
-                <tr>
-                    <td class="label">Phone:</td>
-                    <td class="value">{{ $student->phone ?? 'N/A' }}</td>
+                <tr class="info-row">
+                    <td class="info-cell-label">Class</td>
+                    <td class="info-cell-val">Class {{ $student->schoolClass->name ?? 'N/A' }}</td>
                 </tr>
-                <tr>
-                    <td class="label">DOB:</td>
-                    <td class="value">{{ $student->dob ? \Carbon\Carbon::parse($student->dob)->format('d M, Y') : 'N/A' }}</td>
+                <tr class="info-row">
+                    <td class="info-cell-label">Guardian Phone</td>
+                    <td class="info-cell-val">{{ $student->phone ?? 'N/A' }}</td>
                 </tr>
             </table>
         </div>
 
-        <div class="signature">
-            <div class="sign-line"></div>
-            <div class="sign-text">Principal</div>
-        </div>
-
-        <div class="footer">
-            www.banglamodel.edu.bd
+        <!-- Bottom Signature & Barcode Section -->
+        <div class="bottom-section">
+            <div class="barcode-box">
+                <div class="barcode-lines">|| | ||| || |||| |||</div>
+                <div class="barcode-subtext">ROLL: {{ $student->roll }}</div>
+            </div>
+            <div class="signature-box">
+                <div class="sign-line"></div>
+                <div class="sign-title">Authorized Signature</div>
+            </div>
         </div>
     </div>
 </body>
