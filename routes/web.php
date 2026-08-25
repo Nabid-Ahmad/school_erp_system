@@ -7,7 +7,6 @@ use App\Http\Controllers\Academic\SubjectController;
 use App\Http\Controllers\CMS\ContactController;
 use App\Http\Controllers\CMS\EventController;
 use App\Http\Controllers\CMS\GalleryController;
-use App\Http\Controllers\Finance\AccountController;
 use App\Http\Controllers\Finance\ExpenseController;
 use App\Http\Controllers\Finance\FeeController;
 use App\Http\Controllers\Finance\FeeStructureController;
@@ -19,7 +18,6 @@ use App\Http\Controllers\Student\AttendanceController;
 use App\Http\Controllers\Student\StudentController;
 use App\Http\Controllers\System\NotificationController;
 use App\Http\Controllers\System\ProfileController;
-use App\Http\Controllers\System\ReportController;
 use App\Http\Controllers\System\SettingController;
 use App\Http\Controllers\System\UserController;
 use App\Models\Attendance;
@@ -129,17 +127,8 @@ Route::middleware('auth')->group(function () {
             ->only(['index', 'create', 'store', 'show', 'destroy']);
     });
 
-    // Reports Center Routes
-    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
-    Route::get('/reports/financial', [ReportController::class, 'financialSummary'])->name('reports.financial');
-    Route::get('/reports/student-dues', [ReportController::class, 'studentDues'])->name('reports.student-dues');
-    Route::get('/reports/attendance', [ReportController::class, 'attendanceSummary'])->name('reports.attendance');
-    Route::get('/reports/results', [ReportController::class, 'examResults'])->name('reports.results');
-    Route::get('/reports/payroll', [ReportController::class, 'payrollSummary'])->name('reports.payroll');
 
     Route::middleware('can:manage expenses')->group(function () {
-        Route::get('/accounts', [AccountController::class, 'index'])->name('accounts.index');
-        Route::get('/accounts/report', [AccountController::class, 'report'])->name('accounts.report');
         Route::resource('expenses', ExpenseController::class)
             ->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
     });
