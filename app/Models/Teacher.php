@@ -13,8 +13,8 @@ class Teacher extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function salaries()
+    public function payslips()
     {
-        return $this->hasMany(Salary::class);
+        return $this->hasMany(Payslip::class);
     }
 }

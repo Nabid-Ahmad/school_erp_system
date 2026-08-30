@@ -10,7 +10,7 @@ use App\Http\Controllers\CMS\GalleryController;
 use App\Http\Controllers\Finance\ExpenseController;
 use App\Http\Controllers\Finance\FeeController;
 use App\Http\Controllers\Finance\FeeStructureController;
-use App\Http\Controllers\HR\SalaryController;
+use App\Http\Controllers\HR\PayrollController;
 use App\Http\Controllers\HR\TeacherController;
 use App\Http\Controllers\HR\TeacherProfileController;
 use App\Http\Controllers\SearchController;
@@ -19,6 +19,7 @@ use App\Http\Controllers\Student\StudentController;
 use App\Http\Controllers\System\NotificationController;
 use App\Http\Controllers\System\ProfileController;
 use App\Http\Controllers\System\SettingController;
+use App\Http\Controllers\ParentPortalController;
 use App\Http\Controllers\System\UserController;
 use App\Models\Attendance;
 use App\Models\Event;
@@ -139,9 +140,11 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware('can:manage salaries')->group(function () {
-        Route::get('/salaries', [SalaryController::class, 'index'])->name('salaries.index');
-        Route::post('/salaries', [SalaryController::class, 'store'])->name('salaries.store');
-        Route::delete('/salaries/{salary}', [SalaryController::class, 'destroy'])->name('salaries.destroy');
+        Route::get('/payrolls', [PayrollController::class, 'index'])->name('payrolls.index');
+        Route::get('/payrolls/create', [PayrollController::class, 'create'])->name('payrolls.create');
+        Route::post('/payrolls', [PayrollController::class, 'store'])->name('payrolls.store');
+        Route::get('/payrolls/{payroll}', [PayrollController::class, 'show'])->name('payrolls.show');
+        Route::post('/payrolls/payslips/{payslip}/pay', [PayrollController::class, 'pay'])->name('payrolls.pay');
     });
 
     // Admin, Staff (with permission) & Teacher Routes
@@ -153,6 +156,14 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:admin,teacher,manage results')->group(function () {
         Route::resource('results', ResultController::class)
             ->only(['index', 'create', 'store']);
+    });
+
+    // Parents Portal Routes
+    Route::prefix('parent')->name('parent.')->group(function () {
+        Route::get('/profile', [ParentPortalController::class, 'profile'])->name('profile');
+        Route::get('/attendance', [ParentPortalController::class, 'attendance'])->name('attendance');
+        Route::get('/results', [ParentPortalController::class, 'results'])->name('results');
+        Route::get('/fees', [ParentPortalController::class, 'fees'])->name('fees');
     });
 });
 

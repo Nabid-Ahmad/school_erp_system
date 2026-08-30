@@ -596,14 +596,14 @@
                                     <div class="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center text-xl group-hover:bg-white group-hover:scale-110 group-hover:text-deep-green group-hover:shadow-xl group-hover:shadow-white/20 transition-all duration-300">📞</div>
                                     <div>
                                         <p class="text-xs font-black text-green-200/50 uppercase tracking-widest mb-1">Call Us</p>
-                                        <span class="font-bold text-base text-white group-hover:text-green-200 transition-colors">{{ $schoolSettings['school_phone'] ?? '+880 1711 223 344' }}</span>
+                                        <span class="font-bold text-base text-white group-hover:text-green-200 transition-colors">{{ $schoolSettings['school_phone'] ?? '+8801303365662' }}</span>
                                     </div>
                                 </div>
                                 <div class="group flex gap-5 items-center p-3 -ml-3 rounded-2xl hover:bg-white/5 transition-all duration-300 cursor-pointer">
                                     <div class="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center text-xl group-hover:bg-white group-hover:scale-110 group-hover:text-deep-green group-hover:shadow-xl group-hover:shadow-white/20 transition-all duration-300">✉️</div>
                                     <div>
                                         <p class="text-xs font-black text-green-200/50 uppercase tracking-widest mb-1">Email Us</p>
-                                        <span class="font-bold text-base text-white group-hover:text-green-200 transition-colors">{{ $schoolSettings['school_email'] ?? 'info@banglamodel.edu.bd' }}</span>
+                                        <span class="font-bold text-base text-white group-hover:text-green-200 transition-colors">{{ $schoolSettings['school_email'] ?? 'nabidahmad.zidan@gmail.com' }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -721,11 +721,11 @@
                             </div>
                             <div class="flex gap-4">
                                 <span class="text-2xl opacity-50">📞</span>
-                                <p class="text-green-100 font-bold text-sm">{{ $schoolSettings['school_phone'] ?? '+880 1711 223 344' }}</p>
+                                <p class="text-green-100 font-bold text-sm">{{ $schoolSettings['school_phone'] ?? '+8801303365662' }}</p>
                             </div>
                             <div class="flex gap-4">
                                 <span class="text-2xl opacity-50">✉️</span>
-                                <p class="text-green-100 font-bold text-sm">{{ $schoolSettings['school_email'] ?? 'info@school.edu' }}</p>
+                                <p class="text-green-100 font-bold text-sm">{{ $schoolSettings['school_email'] ?? 'nabidahmad.zidan@gmail.com' }}</p>
                             </div>
                         </div>
                     </div>

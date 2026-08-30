@@ -49,23 +49,11 @@
             @endcan
 
             <!-- Operations -->
-            @canany(['manage attendances', 'manage results', 'manage promotions', 'manage fees', 'manage expenses', 'manage salaries'])
+            @canany(['manage promotions', 'manage fees', 'manage expenses', 'manage salaries'])
             <div class="px-6 py-2 mt-6 mb-2">
                 <p class="text-[10px] font-black uppercase text-purple-300 tracking-widest">Operations</p>
             </div>
             @endcanany
-            @can('manage attendances')
-            <a href="{{ route('attendances.index') }}" class="flex items-center gap-3 px-6 py-3 transition-colors hover:bg-purple-700 {{ request()->routeIs('attendances.*') ? 'bg-purple-700 border-l-4 border-white font-bold' : 'font-medium opacity-90 hover:opacity-100 border-l-4 border-transparent' }}">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 00-2 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
-                <span>Attendance</span>
-            </a>
-            @endcan
-            @can('manage results')
-            <a href="{{ route('results.index') }}" class="flex items-center gap-3 px-6 py-3 transition-colors hover:bg-purple-700 {{ request()->routeIs('results.*') ? 'bg-purple-700 border-l-4 border-white font-bold' : 'font-medium opacity-90 hover:opacity-100 border-l-4 border-transparent' }}">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
-                <span>Results</span>
-            </a>
-            @endcan
             @can('manage promotions')
             <a href="{{ route('promotions.index') }}" class="flex items-center gap-3 px-6 py-3 transition-colors hover:bg-purple-700 {{ request()->routeIs('promotions.*') ? 'bg-purple-700 border-l-4 border-white font-bold' : 'font-medium opacity-90 hover:opacity-100 border-l-4 border-transparent' }}">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
@@ -73,6 +61,12 @@
             </a>
             @endcan
 
+            @can('manage salaries')
+            <a href="{{ route('payrolls.index') }}" class="flex items-center gap-3 px-6 py-3 transition-colors hover:bg-purple-700 {{ request()->routeIs('payrolls.*') ? 'bg-purple-700 border-l-4 border-white font-bold' : 'font-medium opacity-90 hover:opacity-100 border-l-4 border-transparent' }}">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span>Staff Payroll</span>
+            </a>
+            @endcan
             @can('manage fees')
             <a href="{{ route('fees.index') }}" class="flex items-center gap-3 px-6 py-3 transition-colors hover:bg-purple-700 {{ request()->routeIs('fees.*') ? 'bg-purple-700 border-l-4 border-white font-bold' : 'font-medium opacity-90 hover:opacity-100 border-l-4 border-transparent' }}">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -85,12 +79,7 @@
                 <span>Expenses</span>
             </a>
             @endcan
-            @can('manage salaries')
-            <a href="{{ route('salaries.index') }}" class="flex items-center gap-3 px-6 py-3 transition-colors hover:bg-purple-700 {{ request()->routeIs('salaries.*') ? 'bg-purple-700 border-l-4 border-white font-bold' : 'font-medium opacity-90 hover:opacity-100 border-l-4 border-transparent' }}">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                <span>Staff Payroll</span>
-            </a>
-            @endcan
+
 
             <!-- Website CMS -->
             @canany(['manage fees', 'manage galleries', 'manage events'])
@@ -116,6 +105,75 @@
                 <span>Events</span>
             </a>
             @endcan
+            
+            <!-- Teacher Portal -->
+            @if(auth()->user()->role === 'admin' || auth()->user()->role === 'teacher')
+            <div class="px-6 py-2 mt-6 mb-2">
+                <p class="text-[10px] font-black uppercase text-purple-300 tracking-widest">Teacher Portal</p>
+            </div>
+            
+            <div x-data="{ open: false }">
+                <button @click="open = !open" class="w-full flex items-center justify-between px-6 py-3 transition-colors hover:bg-purple-700 font-medium opacity-90 hover:opacity-100 border-l-4 border-transparent focus:outline-none">
+                    <div class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                        <span>Teacher Portal</span>
+                    </div>
+                    <svg :class="{'rotate-180': open}" class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                
+                <div x-show="open" x-transition.opacity class="bg-purple-800/30 py-2 space-y-1" style="display: none;">
+                    <a href="{{ route('attendances.index') }}" class="flex items-center gap-3 px-11 py-2 transition-colors hover:text-white {{ request()->routeIs('attendances.*') ? 'text-white font-bold' : 'text-purple-200 text-sm font-medium' }}">
+                        <svg class="w-4 h-4 {{ request()->routeIs('attendances.*') ? 'text-emerald-400' : 'text-purple-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 00-2 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                        <span>Attendance</span>
+                    </a>
+                    
+                    <a href="{{ route('results.index') }}" class="flex items-center gap-3 px-11 py-2 transition-colors hover:text-white {{ request()->routeIs('results.*') ? 'text-white font-bold' : 'text-purple-200 text-sm font-medium' }}">
+                        <svg class="w-4 h-4 {{ request()->routeIs('results.*') ? 'text-emerald-400' : 'text-purple-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
+                        <span>Results</span>
+                    </a>
+                </div>
+            </div>
+            @endif
+
+            <!-- Parents Portal -->
+            @if(auth()->user()->role === 'admin' || auth()->user()->role === 'parent')
+            <div class="px-6 py-2 mt-6 mb-2">
+                <p class="text-[10px] font-black uppercase text-purple-300 tracking-widest">Parents Portal</p>
+            </div>
+            
+            <div x-data="{ open: false }">
+                <button @click="open = !open" class="w-full flex items-center justify-between px-6 py-3 transition-colors hover:bg-purple-700 font-medium opacity-90 hover:opacity-100 border-l-4 border-transparent focus:outline-none">
+                    <div class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        <span>Parents Portal</span>
+                    </div>
+                    <svg :class="{'rotate-180': open}" class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                
+                <div x-show="open" x-transition.opacity class="bg-purple-800/30 py-2 space-y-1" style="display: none;">
+                    <a href="{{ route('parent.profile') }}" class="flex items-center gap-3 px-11 py-2 transition-colors hover:text-white text-purple-200 text-sm font-medium">
+                        <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                        <span>Student Profile</span>
+                    </a>
+                    
+                    <a href="{{ route('parent.attendance') }}" class="flex items-center gap-3 px-11 py-2 transition-colors hover:text-white text-purple-200 text-sm font-medium">
+                        <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 00-2 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                        <span>Attendance</span>
+                    </a>
+
+                    <a href="{{ route('parent.results') }}" class="flex items-center gap-3 px-11 py-2 transition-colors hover:text-white text-purple-200 text-sm font-medium">
+                        <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
+                        <span>Academic Results</span>
+                    </a>
+                    
+                    <a href="{{ route('parent.fees') }}" class="flex items-center gap-3 px-11 py-2 transition-colors hover:text-white text-purple-200 text-sm font-medium">
+                        <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span>Fees & Payments</span>
+                    </a>
+                </div>
+            </div>
+            @endif
+
             @if(auth()->user()->role === 'admin')
             <div class="px-6 py-2 mt-6 mb-2">
                 <p class="text-[10px] font-black uppercase text-purple-300 tracking-widest">System Admin</p>
