@@ -165,7 +165,7 @@
                                 <div class="w-14 h-14 rounded-full bg-white shadow-lg flex items-center justify-center text-deep-green group-hover:scale-110 transition">
                                     <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6V4z"/></svg>
                                 </div>
-                                <span class="font-bold text-green-600">Explore Campus</span>
+                                <span class="font-bold text-green-600">Explore Our Campus</span>
                             </div>
                         </div>
                     </div>
@@ -178,8 +178,8 @@
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                             </div>
                             <div>
-                                <div class="text-xs text-gray-400 font-bold uppercase">Admission 2026</div>
-                                <div class="text-sm font-black text-deep-green">Seats are Limited!</div>
+                                <div class="text-xs text-gray-400 font-bold uppercase">Admission Open</div>
+                                <div class="text-sm font-black text-deep-green">Apply Now!</div>
                             </div>
                         </div>
                     </div>
@@ -248,7 +248,7 @@
                                 <div class="w-12 h-12 bg-green-500 rounded-2xl flex items-center justify-center text-white text-xl">✨</div>
                                 <div>
                                     <p class="text-xs font-black text-gray-400 uppercase tracking-widest">Available Seats</p>
-                                    <p class="text-xl font-black text-deep-green">Admission Open 2026</p>
+                                    <p class="text-xl font-black text-deep-green">Admission Open</p>
                                 </div>
                             </div>
                         </div>
