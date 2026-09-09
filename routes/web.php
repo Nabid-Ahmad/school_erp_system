@@ -145,6 +145,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/payrolls', [PayrollController::class, 'store'])->name('payrolls.store');
         Route::get('/payrolls/{payroll}', [PayrollController::class, 'show'])->name('payrolls.show');
         Route::post('/payrolls/payslips/{payslip}/pay', [PayrollController::class, 'pay'])->name('payrolls.pay');
+        Route::resource('payrolls', PayrollController::class)->only(['index', 'create', 'store', 'show']);
+
     });
 
     // Admin, Staff (with permission) & Teacher Routes
