@@ -52,6 +52,11 @@ class PermissionSeeder extends Seeder
             'manage results',
         ]);
 
+        // Subadmin role: receives all permissions by default, but is blocked
+        // from deleting via middleware.
+        $subadmin = Role::firstOrCreate(['name' => 'subadmin']);
+        $subadmin->syncPermissions($permissions);
+
         // Staff role: receives no permissions by default. An admin grants
         // individual abilities (e.g. manage fees) through User Management.
         Role::firstOrCreate(['name' => 'staff']);

@@ -35,6 +35,7 @@
                             <select name="role" class="w-full bg-gray-50 border-none rounded-xl p-4 focus:ring-2 focus:ring-primary font-bold">
                                 <option value="staff" {{ $user->role === 'staff' ? 'selected' : '' }}>Staff</option>
                                 <option value="teacher" {{ $user->role === 'teacher' ? 'selected' : '' }}>Teacher</option>
+                                <option value="subadmin" {{ $user->role === 'subadmin' ? 'selected' : '' }}>Subadmin</option>
                                 <option value="admin" {{ $user->role === 'admin' ? 'selected' : '' }}>Admin</option>
                             </select>
                             @error('role') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
@@ -53,12 +54,18 @@
                         </div>
 
                         <div>
-                            <label class="block text-sm font-black text-gray-400 uppercase tracking-widest mb-2">Assign Permissions</label>
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="block text-sm font-black text-gray-400 uppercase tracking-widest">Assign Permissions</label>
+                                <label class="inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" id="selectAllPermissions" class="rounded border-gray-300 text-primary shadow-sm focus:ring-primary">
+                                    <span class="ml-2 text-sm text-gray-600 font-bold">Select All</span>
+                                </label>
+                            </div>
                             <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 bg-gray-50 p-4 rounded-xl">
                                 @foreach($permissions as $permission)
                                     <label class="inline-flex items-center cursor-pointer">
                                         <input type="checkbox" name="permissions[]" value="{{ $permission->name }}" 
-                                            class="rounded border-gray-300 text-primary shadow-sm focus:ring-primary"
+                                            class="permission-checkbox rounded border-gray-300 text-primary shadow-sm focus:ring-primary"
                                             {{ $user->hasPermissionTo($permission->name) ? 'checked' : '' }}>
                                         <span class="ml-2 text-sm text-gray-600 font-bold capitalize">{{ str_replace('manage ', '', $permission->name) }}</span>
                                     </label>
@@ -75,4 +82,28 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let selectAllCheckbox = document.getElementById('selectAllPermissions');
+            let permissionCheckboxes = document.querySelectorAll('.permission-checkbox');
+
+            // Initially check the "Select All" checkbox if all permissions are already checked
+            let allChecked = Array.from(permissionCheckboxes).every(c => c.checked);
+            selectAllCheckbox.checked = allChecked && permissionCheckboxes.length > 0;
+
+            selectAllCheckbox.addEventListener('change', function(e) {
+                permissionCheckboxes.forEach(function(checkbox) {
+                    checkbox.checked = e.target.checked;
+                });
+            });
+
+            permissionCheckboxes.forEach(function(checkbox) {
+                checkbox.addEventListener('change', function() {
+                    let allChecked = Array.from(permissionCheckboxes).every(c => c.checked);
+                    selectAllCheckbox.checked = allChecked;
+                });
+            });
+        });
+    </script>
 </x-app-layout>

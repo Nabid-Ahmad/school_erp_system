@@ -32,6 +32,7 @@
                             <select name="role" class="w-full bg-gray-50 border-none rounded-xl p-4 focus:ring-2 focus:ring-primary font-bold">
                                 <option value="staff">Staff</option>
                                 <option value="teacher">Teacher</option>
+                                <option value="subadmin">Subadmin</option>
                                 <option value="admin">Admin</option>
                             </select>
                         </div>
@@ -48,11 +49,17 @@
                         </div>
 
                         <div>
-                            <label class="block text-sm font-black text-gray-400 uppercase tracking-widest mb-2">Assign Permissions</label>
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="block text-sm font-black text-gray-400 uppercase tracking-widest">Assign Permissions</label>
+                                <label class="inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" id="selectAllPermissions" class="rounded border-gray-300 text-primary shadow-sm focus:ring-primary">
+                                    <span class="ml-2 text-sm text-gray-600 font-bold">Select All</span>
+                                </label>
+                            </div>
                             <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 bg-gray-50 p-4 rounded-xl">
                                 @foreach($permissions as $permission)
                                     <label class="inline-flex items-center cursor-pointer">
-                                        <input type="checkbox" name="permissions[]" value="{{ $permission->name }}" class="rounded border-gray-300 text-primary shadow-sm focus:ring-primary">
+                                        <input type="checkbox" name="permissions[]" value="{{ $permission->name }}" class="permission-checkbox rounded border-gray-300 text-primary shadow-sm focus:ring-primary">
                                         <span class="ml-2 text-sm text-gray-600 font-bold capitalize">{{ str_replace('manage ', '', $permission->name) }}</span>
                                     </label>
                                 @endforeach
@@ -68,4 +75,22 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById('selectAllPermissions').addEventListener('change', function(e) {
+            let checkboxes = document.querySelectorAll('.permission-checkbox');
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = e.target.checked;
+            });
+        });
+        
+        let permissionCheckboxes = document.querySelectorAll('.permission-checkbox');
+        permissionCheckboxes.forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                let allChecked = Array.from(permissionCheckboxes).every(c => c.checked);
+                document.getElementById('selectAllPermissions').checked = allChecked;
+            });
+        });
+    </script>
+
 </x-app-layout>
