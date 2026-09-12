@@ -3,7 +3,52 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Bangla Model School - Nurturing Excellence, Inspiring Tomorrow. A comprehensive school ERP system offering advanced tools for modern educators, students, and parents.">
+        <meta name="keywords" content="School ERP, Bangla Model School, Education, Student Portal, Teacher Portal, Admission, Learning, Career, Jobs">
+        <meta property="og:title" content="Bangla Model School | Excellence in Nature & Education">
+        <meta property="og:description" content="Bangla Model School - Nurturing Excellence, Inspiring Tomorrow. Discover the foundation for your child's brilliant future.">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="{{ url('/') }}">
         <title>Bangla Model School | Excellence in Nature & Education</title>
+
+        <!-- JSON-LD Job Schema -->
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org/",
+          "@type": "JobPosting",
+          "title": "Teacher",
+          "description": "We are looking for dedicated and passionate teachers to join the Bangla Model School family. You will be responsible for nurturing excellence and inspiring tomorrow's leaders.",
+          "hiringOrganization": {
+            "@type": "Organization",
+            "name": "Bangla Model School",
+            "sameAs": "{{ url('/') }}",
+            "logo": "{{ asset('images/banner.png') }}"
+          },
+          "employmentType": "FULL_TIME",
+          "datePosted": "{{ now()->toIso8601String() }}",
+          "validThrough": "{{ now()->addMonths(1)->toIso8601String() }}",
+          "jobLocation": {
+            "@type": "Place",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Dhaka",
+              "addressRegion": "Dhaka",
+              "addressCountry": "BD"
+            }
+          }
+        }
+        </script>
+        <!-- JSON-LD Educational Organization Schema -->
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "EducationalOrganization",
+          "name": "Bangla Model School",
+          "url": "{{ url('/') }}",
+          "logo": "{{ asset('images/banner.png') }}",
+          "description": "A dynamic environment where curiosity thrives, character is forged, and every student is empowered to reach their boundless potential."
+        }
+        </script>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -171,7 +216,7 @@
                     </div>
                     <div class="relative reveal active delay-500">
                         <div class="animate-float">
-                            <img src="{{ asset('images/banner.png') }}" onerror="this.src='https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop'" class="relative z-10 rounded-[3rem] shadow-[0_50px_100px_-20px_rgba(21,128,61,0.2)] border-[12px] border-white object-cover aspect-[4/3]" alt="Campus">
+                            <img src="{{ asset('images/banner.png') }}" fetchpriority="high" onerror="this.src='https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop'" class="relative z-10 rounded-[3rem] shadow-[0_50px_100px_-20px_rgba(21,128,61,0.2)] border-[12px] border-white object-cover aspect-[4/3]" alt="Campus">
                         </div>
                         <div class="absolute -bottom-10 -left-10 z-20 bg-white p-6 rounded-3xl shadow-2xl flex items-center gap-4 animate-bounce duration-[3000ms]">
                             <div class="w-12 h-12 bg-deep-green rounded-full flex items-center justify-center text-white">
@@ -236,7 +281,7 @@
                     <!-- Right: Admission Image -->
                     <div class="relative reveal" style="transition-delay: 300ms;">
                         <div class="relative z-10 rounded-[4rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(21,128,61,0.3)] border-[12px] border-white">
-                            <img src="{{ asset('images/admission_banner.png') }}" onerror="this.src='https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=2073&auto=format&fit=crop'" class="w-full h-full object-cover" alt="Student Admission">
+                            <img src="{{ asset('images/admission_banner.png') }}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=2073&auto=format&fit=crop'" class="w-full h-full object-cover" alt="Student Admission">
                         </div>
                         <!-- Abstract Elements -->
                         <div class="absolute -top-10 -right-10 w-40 h-40 bg-green-500/10 rounded-full blur-3xl"></div>
@@ -271,7 +316,7 @@
                     <div class="lg:col-span-5 relative reveal">
                         <div class="relative z-10 rounded-3xl overflow-hidden shadow-2xl border-[8px] border-green-50/50 group">
                             <div class="absolute inset-0 bg-blue-900/10 group-hover:bg-transparent transition duration-500 z-10"></div>
-                            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2070&auto=format&fit=crop" onerror="this.onerror=null; this.src='{{ asset('images/student_portal.svg') }}'" class="w-full h-full object-cover aspect-[4/5] group-hover:scale-105 transition duration-700" alt="Student Services">
+                            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2070&auto=format&fit=crop" loading="lazy" onerror="this.onerror=null; this.src='{{ asset('images/student_portal.svg') }}'" class="w-full h-full object-cover aspect-[4/5] group-hover:scale-105 transition duration-700" alt="Student Services">
                             
                             <!-- Floating Card -->
                             <div class="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur px-6 py-4 rounded-2xl shadow-xl z-20 flex items-center justify-between">
@@ -379,7 +424,7 @@
                     <div class="lg:col-span-5 order-1 lg:order-2 relative reveal">
                         <div class="relative z-10 rounded-3xl overflow-hidden shadow-2xl border-[8px] border-white group">
                             <div class="absolute inset-0 bg-green-900/10 group-hover:bg-transparent transition duration-500 z-10"></div>
-                            <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=2070&auto=format&fit=crop" onerror="this.onerror=null; this.src='{{ asset('images/teacher_portal.svg') }}'" class="w-full h-full object-cover aspect-[4/5] group-hover:scale-105 transition duration-700" alt="Teacher Services">
+                            <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=2070&auto=format&fit=crop" loading="lazy" onerror="this.onerror=null; this.src='{{ asset('images/teacher_portal.svg') }}'" class="w-full h-full object-cover aspect-[4/5] group-hover:scale-105 transition duration-700" alt="Teacher Services">
                             
                             <!-- Floating Card -->
                             <div class="absolute top-6 left-6 right-6 bg-white/95 backdrop-blur px-6 py-4 rounded-2xl shadow-xl z-20 flex items-center gap-4">
@@ -412,7 +457,7 @@
                     <div class="lg:col-span-5 relative reveal">
                         <div class="relative z-10 rounded-3xl overflow-hidden shadow-2xl border-[8px] border-purple-50 group">
                             <div class="absolute inset-0 bg-purple-900/10 group-hover:bg-transparent transition duration-500 z-10"></div>
-                            <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=2070&auto=format&fit=crop" onerror="this.onerror=null; this.src='{{ asset('images/parent_portal.svg') }}'" class="w-full h-full object-cover aspect-[4/5] group-hover:scale-105 transition duration-700" alt="Parent Services">
+                            <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=2070&auto=format&fit=crop" loading="lazy" onerror="this.onerror=null; this.src='{{ asset('images/parent_portal.svg') }}'" class="w-full h-full object-cover aspect-[4/5] group-hover:scale-105 transition duration-700" alt="Parent Services">
                             
                             <!-- Floating Card -->
                             <div class="absolute bottom-6 right-6 bg-white/95 backdrop-blur px-6 py-4 rounded-2xl shadow-xl z-20 flex flex-col gap-1 items-end">
@@ -475,7 +520,7 @@
                     @forelse($galleries as $gallery)
                     <div class="reveal flex flex-col overflow-hidden rounded-3xl bg-white shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group cursor-pointer border border-gray-100">
                         <div class="relative overflow-hidden h-72">
-                            <img src="{{ filter_var($gallery->image, FILTER_VALIDATE_URL) ? $gallery->image : asset('storage/' . $gallery->image) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out" alt="{{ $gallery->title }}">
+                            <img src="{{ filter_var($gallery->image, FILTER_VALIDATE_URL) ? $gallery->image : asset('storage/' . $gallery->image) }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out" alt="{{ $gallery->title }}">
                             <div class="absolute inset-0 bg-deep-green/0 group-hover:bg-deep-green/10 transition-colors duration-300"></div>
                         </div>
                         <div class="p-6 relative bg-white transition-colors duration-300">
@@ -523,7 +568,7 @@
                             <div class="reveal overflow-hidden rounded-[2.5rem] shadow-xl hover:shadow-2xl transition group bg-white h-full flex flex-col">
                                 <div class="relative overflow-hidden h-72">
                                     @if($event->image)
-                                        <img src="{{ filter_var($event->image, FILTER_VALIDATE_URL) ? $event->image : asset('storage/' . $event->image) }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="{{ $event->title }}">
+                                        <img src="{{ filter_var($event->image, FILTER_VALIDATE_URL) ? $event->image : asset('storage/' . $event->image) }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="{{ $event->title }}">
                                     @else
                                         <div class="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400 font-bold">Bangla Model Event</div>
                                     @endif
@@ -668,7 +713,7 @@
                     <div class="space-y-8">
                         <div class="flex items-center gap-4">
                             @if(isset($schoolSettings['school_logo']))
-                                <img src="{{ filter_var($schoolSettings['school_logo'] ?? '', FILTER_VALIDATE_URL) ? $schoolSettings['school_logo'] : asset('storage/'.($schoolSettings['school_logo'] ?? '')) }}" class="w-16 h-16 rounded-[2rem] object-contain bg-white p-2">
+                                <img src="{{ filter_var($schoolSettings['school_logo'] ?? '', FILTER_VALIDATE_URL) ? $schoolSettings['school_logo'] : asset('storage/'.($schoolSettings['school_logo'] ?? '')) }}" loading="lazy" class="w-16 h-16 rounded-[2rem] object-contain bg-white p-2">
                             @else
                                 <div class="w-16 h-16 bg-white rounded-[2rem] flex items-center justify-center text-deep-green font-black text-3xl shadow-2xl">
                                     {{ substr($schoolSettings['school_name'] ?? 'B', 0, 1) }}
