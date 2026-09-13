@@ -14,12 +14,12 @@
         <!-- JSON-LD Job Schema -->
         <script type="application/ld+json">
         {
-          "@context": "https://schema.org/",
-          "@type": "JobPosting",
+          "@@context": "https://schema.org/",
+          "@@type": "JobPosting",
           "title": "Teacher",
           "description": "We are looking for dedicated and passionate teachers to join the Bangla Model School family. You will be responsible for nurturing excellence and inspiring tomorrow's leaders.",
           "hiringOrganization": {
-            "@type": "Organization",
+            "@@type": "Organization",
             "name": "Bangla Model School",
             "sameAs": "{{ url('/') }}",
             "logo": "{{ asset('images/banner.png') }}"
@@ -28,9 +28,9 @@
           "datePosted": "{{ now()->toIso8601String() }}",
           "validThrough": "{{ now()->addMonths(1)->toIso8601String() }}",
           "jobLocation": {
-            "@type": "Place",
+            "@@type": "Place",
             "address": {
-              "@type": "PostalAddress",
+              "@@type": "PostalAddress",
               "addressLocality": "Dhaka",
               "addressRegion": "Dhaka",
               "addressCountry": "BD"
@@ -41,8 +41,8 @@
         <!-- JSON-LD Educational Organization Schema -->
         <script type="application/ld+json">
         {
-          "@context": "https://schema.org",
-          "@type": "EducationalOrganization",
+          "@@context": "https://schema.org",
+          "@@type": "EducationalOrganization",
           "name": "Bangla Model School",
           "url": "{{ url('/') }}",
           "logo": "{{ asset('images/banner.png') }}",

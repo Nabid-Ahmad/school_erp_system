@@ -21,6 +21,8 @@ use App\Http\Controllers\System\ProfileController;
 use App\Http\Controllers\System\SettingController;
 use App\Http\Controllers\ParentPortalController;
 use App\Http\Controllers\System\UserController;
+use App\Http\Controllers\Library\BookController;
+use App\Http\Controllers\Library\BookIssueController;
 use App\Models\Attendance;
 use App\Models\Event;
 use App\Models\Expense;
@@ -167,6 +169,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/results', [ParentPortalController::class, 'results'])->name('results');
         Route::get('/fees', [ParentPortalController::class, 'fees'])->name('fees');
     });
+
+    // Library Management Routes
+    Route::prefix('library')->name('library.')->group(function () {
+        Route::resource('books', BookController::class);
+        Route::resource('issues', BookIssueController::class);
+        Route::post('/issues/{issue}/return', [BookIssueController::class, 'returnBook'])->name('issues.return');
+    });
+
 });
 
 require __DIR__.'/auth.php';

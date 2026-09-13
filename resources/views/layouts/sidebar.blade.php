@@ -81,6 +81,19 @@
             @endcan
 
 
+            <!-- Library Management -->
+            <div class="px-6 py-2 mt-6 mb-2">
+                <p class="text-[10px] font-black uppercase text-purple-300 tracking-widest">Library</p>
+            </div>
+            <a href="{{ route('library.books.index') }}" class="flex items-center gap-3 px-6 py-3 transition-colors hover:bg-purple-700 {{ request()->routeIs('library.books.*') ? 'bg-purple-700 border-l-4 border-white font-bold' : 'font-medium opacity-90 hover:opacity-100 border-l-4 border-transparent' }}">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                <span>Books Index</span>
+            </a>
+            <a href="{{ route('library.issues.index') }}" class="flex items-center gap-3 px-6 py-3 transition-colors hover:bg-purple-700 {{ request()->routeIs('library.issues.*') ? 'bg-purple-700 border-l-4 border-white font-bold' : 'font-medium opacity-90 hover:opacity-100 border-l-4 border-transparent' }}">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span>Issued Books</span>
+            </a>
+
             <!-- Website CMS -->
             @canany(['manage fees', 'manage galleries', 'manage events'])
             <div class="px-6 py-2 mt-6 mb-2">
