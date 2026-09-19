@@ -139,17 +139,21 @@
                 </div>
 
                 <div class="space-y-6">
-                    <h2 class="text-2xl font-black text-gray-900 bg-white/50 backdrop-blur-md px-4 py-2 rounded-2xl inline-flex">Latest News</h2>
+                    <h2 class="text-2xl font-black text-gray-900 bg-white/50 backdrop-blur-md px-4 py-2 rounded-2xl inline-flex">Notice Board</h2>
                     <div class="bg-white p-8 rounded-[2rem] shadow-md border border-gray-100">
                         <div class="space-y-6">
-                            <div class="flex gap-4">
-                                <div class="w-2 h-2 mt-2 bg-green-500 rounded-full"></div>
-                                <p class="text-sm font-bold text-gray-800">Annual Exam results are out!</p>
+                            @forelse($dashboardNotices as $notice)
+                            <div class="flex gap-4 group">
+                                <div class="w-2 h-2 mt-2 bg-yellow-500 rounded-full flex-shrink-0 group-hover:scale-150 transition-transform"></div>
+                                <div>
+                                    <p class="text-sm font-black text-gray-800 leading-snug">{{ $notice->title }}</p>
+                                    <p class="text-xs text-gray-500 mt-1 line-clamp-2">{{ $notice->content }}</p>
+                                    <p class="text-[10px] font-bold text-gray-400 mt-1 uppercase">{{ $notice->created_at->diffForHumans() }}</p>
+                                </div>
                             </div>
-                            <div class="flex gap-4">
-                                <div class="w-2 h-2 mt-2 bg-blue-500 rounded-full"></div>
-                                <p class="text-sm font-bold text-gray-800">New batch admissions started.</p>
-                            </div>
+                            @empty
+                            <p class="text-sm text-gray-500 font-bold text-center">No new notices.</p>
+                            @endforelse
                         </div>
                     </div>
                 </div>

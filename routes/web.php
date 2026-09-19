@@ -23,6 +23,8 @@ use App\Http\Controllers\ParentPortalController;
 use App\Http\Controllers\System\UserController;
 use App\Http\Controllers\Library\BookController;
 use App\Http\Controllers\Library\BookIssueController;
+use App\Http\Controllers\HR\LeaveController;
+use App\Http\Controllers\Communication\NoticeController;
 use App\Models\Attendance;
 use App\Models\Event;
 use App\Models\Expense;
@@ -60,7 +62,19 @@ Route::get('/dashboard', function () {
             ->sum('amount')
         : null;
 
-    return view('dashboard', compact('totalStudents', 'totalTeachers', 'todayAttendance', 'monthlyFees', 'monthlyExpenses'));
+    $audience = 'students';
+    if ($user->role === 'teacher') $audience = 'teachers';
+    if ($user->role === 'parent') $audience = 'parents';
+
+    $noticesQuery = App\Models\Notice::query();
+    if ($user->role !== 'admin') {
+        $noticesQuery->whereIn('target_audience', ['all', $audience]);
+    }
+    $dashboardNotices = $noticesQuery->where(function($q) {
+        $q->whereNull('expires_at')->orWhere('expires_at', '>=', now()->toDateString());
+    })->latest()->take(3)->get();
+
+    return view('dashboard', compact('totalStudents', 'totalTeachers', 'todayAttendance', 'monthlyFees', 'monthlyExpenses', 'dashboardNotices'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Public Contact Route (Accessible without login)
@@ -177,6 +191,16 @@ Route::middleware('auth')->group(function () {
         Route::post('/issues/{issue}/return', [BookIssueController::class, 'returnBook'])->name('issues.return');
     });
 
+    // HR Routes
+    Route::prefix('hr')->name('hr.')->group(function () {
+        Route::resource('leaves', LeaveController::class)->only(['index', 'create', 'store']);
+        Route::post('leaves/{leave}/status', [LeaveController::class, 'updateStatus'])->name('leaves.status');
+    });
+
+    // Communication Routes
+    Route::prefix('communication')->name('communication.')->group(function () {
+        Route::resource('notices', NoticeController::class)->only(['index', 'create', 'store', 'destroy']);
+    });
 });
 
 require __DIR__.'/auth.php';

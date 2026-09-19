@@ -94,6 +94,19 @@
                 <span>Issued Books</span>
             </a>
 
+            <!-- HR & Communication -->
+            <div class="px-6 py-2 mt-6 mb-2">
+                <p class="text-[10px] font-black uppercase text-purple-300 tracking-widest">HR & Comm.</p>
+            </div>
+            <a href="{{ route('hr.leaves.index') }}" class="flex items-center gap-3 px-6 py-3 transition-colors hover:bg-purple-700 {{ request()->routeIs('hr.leaves.*') ? 'bg-purple-700 border-l-4 border-white font-bold' : 'font-medium opacity-90 hover:opacity-100 border-l-4 border-transparent' }}">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                <span>Leave Applications</span>
+            </a>
+            <a href="{{ route('communication.notices.index') }}" class="flex items-center gap-3 px-6 py-3 transition-colors hover:bg-purple-700 {{ request()->routeIs('communication.notices.*') ? 'bg-purple-700 border-l-4 border-white font-bold' : 'font-medium opacity-90 hover:opacity-100 border-l-4 border-transparent' }}">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path></svg>
+                <span>Notice Board</span>
+            </a>
+
             <!-- Website CMS -->
             @canany(['manage fees', 'manage galleries', 'manage events'])
             <div class="px-6 py-2 mt-6 mb-2">
