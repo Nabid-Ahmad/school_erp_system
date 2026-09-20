@@ -25,6 +25,7 @@ use App\Http\Controllers\Library\BookController;
 use App\Http\Controllers\Library\BookIssueController;
 use App\Http\Controllers\HR\LeaveController;
 use App\Http\Controllers\Communication\NoticeController;
+use App\Http\Controllers\Academic\ClassRoutineController;
 use App\Models\Attendance;
 use App\Models\Event;
 use App\Models\Expense;
@@ -102,6 +103,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware('can:manage classes')->group(function () {
         Route::resource('classes', SchoolClassController::class)
             ->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+        Route::resource('routines', ClassRoutineController::class);
     });
 
     Route::middleware('can:manage subjects')->group(function () {
