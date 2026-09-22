@@ -26,6 +26,9 @@ use App\Http\Controllers\Library\BookIssueController;
 use App\Http\Controllers\HR\LeaveController;
 use App\Http\Controllers\Communication\NoticeController;
 use App\Http\Controllers\Academic\ClassRoutineController;
+use App\Http\Controllers\Transport\VehicleController;
+use App\Http\Controllers\Transport\RouteController;
+use App\Http\Controllers\Transport\AllocationController;
 use App\Models\Attendance;
 use App\Models\Event;
 use App\Models\Expense;
@@ -199,7 +202,25 @@ Route::middleware('auth')->group(function () {
         Route::post('leaves/{leave}/status', [LeaveController::class, 'updateStatus'])->name('leaves.status');
     });
 
-    // Communication Routes
+    // Transport Management Routes
+    Route::prefix('transport')->name('transport.')->group(function () {
+        Route::resource('vehicles', VehicleController::class)->except(['show', 'edit', 'update']);
+        Route::resource('routes', RouteController::class)->except(['show', 'edit', 'update']);
+        Route::resource('allocations', AllocationController::class)->only(['index', 'store', 'destroy']);
+    });
+    
+    // Academic Homework Routes
+    Route::prefix('academic')->name('academic.')->group(function () {
+        Route::resource('homework', \App\Http\Controllers\Academic\HomeworkController::class);
+        Route::post('homework/submissions/{submission}/grade', [\App\Http\Controllers\Academic\HomeworkController::class, 'gradeSubmission'])->name('homework.submissions.grade');
+    });
+
+    // Student Portal Homework Routes
+    Route::prefix('student-portal')->name('student.')->group(function () {
+        Route::get('homework', [\App\Http\Controllers\StudentPortal\HomeworkController::class, 'index'])->name('homework.index');
+        Route::get('homework/{homework}', [\App\Http\Controllers\StudentPortal\HomeworkController::class, 'show'])->name('homework.show');
+        Route::post('homework/{homework}/submit', [\App\Http\Controllers\StudentPortal\HomeworkController::class, 'submit'])->name('homework.submit');
+    });
     Route::prefix('communication')->name('communication.')->group(function () {
         Route::resource('notices', NoticeController::class)->only(['index', 'create', 'store', 'destroy']);
     });
