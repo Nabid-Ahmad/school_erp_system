@@ -26,6 +26,7 @@
                             <tr class="bg-gray-100 text-gray-700">
                                 <th class="px-4 py-3 border-b">Student</th>
                                 <th class="px-4 py-3 border-b">Class</th>
+                                <th class="px-4 py-3 border-b">Exam</th>
                                 <th class="px-4 py-3 border-b">Subject</th>
                                 <th class="px-4 py-3 border-b">Marks</th>
                                 <th class="px-4 py-3 border-b">Grade</th>
@@ -34,8 +35,9 @@
                         <tbody>
                             @forelse($results as $result)
                                 <tr class="hover:bg-gray-50 border-b">
-                                    <td class="px-4 py-3 font-semibold">{{ $result->student->name }}</td>
+                                    <td class="px-4 py-3 font-semibold">{{ optional($result->student->user)->name ?? 'Student ID: ' . $result->student_id }}</td>
                                     <td class="px-4 py-3 text-sm">Class {{ $result->student->schoolClass->name ?? 'N/A' }}</td>
+                                    <td class="px-4 py-3 text-sm font-bold text-purple-700">{{ $result->exam ? $result->exam->name : 'N/A' }}</td>
                                     <td class="px-4 py-3">{{ $result->subject->name }}</td>
                                     <td class="px-4 py-3">{{ $result->marks }}</td>
                                     <td class="px-4 py-3">

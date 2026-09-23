@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Result extends Model
 {
-    protected $fillable = ['student_id', 'subject_id', 'marks', 'grade'];
+    protected $fillable = ['student_id', 'subject_id', 'exam_id', 'marks', 'grade'];
 
     public function student()
     {
@@ -16,6 +16,11 @@ class Result extends Model
     public function subject()
     {
         return $this->belongsTo(Subject::class);
+    }
+
+    public function exam()
+    {
+        return $this->belongsTo(Exam::class);
     }
 
     public static function calculateGrade($marks)

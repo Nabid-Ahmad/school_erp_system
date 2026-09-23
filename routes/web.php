@@ -177,8 +177,10 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware('role:admin,teacher,manage results')->group(function () {
+        Route::resource('exams', \App\Http\Controllers\Academic\ExamController::class)->except(['show']);
         Route::resource('results', ResultController::class)
             ->only(['index', 'create', 'store']);
+        Route::get('/students/{student}/report-card', [ResultController::class, 'generateReportCard'])->name('students.report-card');
     });
 
     // Parents Portal Routes

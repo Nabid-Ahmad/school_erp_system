@@ -16,7 +16,7 @@
             <!-- Selection Area -->
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
                 <div class="p-6 text-gray-900">
-                    <form action="{{ route('results.create') }}" method="GET" class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+                    <form action="{{ route('results.create') }}" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
                         <div>
                             <label for="class_id" class="block text-sm font-medium text-gray-700">Select Class</label>
                             <select name="class_id" id="class_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm" required onchange="this.form.submit()">
@@ -41,6 +41,18 @@
                             </select>
                         </div>
 
+                        <div>
+                            <label for="exam_id" class="block text-sm font-medium text-gray-700">Select Exam</label>
+                            <select name="exam_id" id="exam_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm" required>
+                                <option value="" disabled {{ !$selected_exam ? 'selected' : '' }}>Choose an exam</option>
+                                @foreach($exams as $exam)
+                                    <option value="{{ $exam->id }}" {{ $selected_exam == $exam->id ? 'selected' : '' }}>
+                                        {{ $exam->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <button type="submit" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
                             Load List
                         </button>
@@ -48,13 +60,14 @@
                 </div>
             </div>
 
-            @if($selected_class && $selected_subject && count($students) > 0)
+            @if($selected_class && $selected_subject && $selected_exam && count($students) > 0)
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
                         <form action="{{ route('results.store') }}" method="POST">
                             @csrf
                             <input type="hidden" name="subject_id" value="{{ $selected_subject }}">
                             <input type="hidden" name="class_id" value="{{ $selected_class }}">
+                            <input type="hidden" name="exam_id" value="{{ $selected_exam }}">
                             
                             <div class="overflow-x-auto">
                                 <table class="w-full text-left border-collapse mb-6">
