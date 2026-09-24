@@ -211,6 +211,12 @@ Route::middleware('auth')->group(function () {
         Route::resource('allocations', AllocationController::class)->only(['index', 'store', 'destroy']);
     });
     
+    // Front Office / Visitor Management Routes
+    Route::prefix('front-office')->group(function () {
+        Route::resource('visitors', \App\Http\Controllers\VisitorController::class);
+        Route::post('visitors/{visitor}/checkout', [\App\Http\Controllers\VisitorController::class, 'checkOut'])->name('visitors.checkout');
+    });
+    
     // Academic Homework Routes
     Route::prefix('academic')->name('academic.')->group(function () {
         Route::resource('homework', \App\Http\Controllers\Academic\HomeworkController::class);
