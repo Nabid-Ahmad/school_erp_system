@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "81687336ec8d5aa520b0d23d5aed7e92",
+    "content-hash": "364ff8378309360fece8b235eb0ccaf7",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -3995,6 +3995,67 @@
                 "source": "https://github.com/MyIntervals/PHP-CSS-Parser/tree/v9.3.0"
             },
             "time": "2026-03-03T17:31:43+00:00"
+        },
+        {
+            "name": "sagor/github-updater",
+            "version": "v2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/moh-sagor/github-updater.git",
+                "reference": "58aaa59109df21632bd7e5fa7cf66e3423474272"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/moh-sagor/github-updater/zipball/58aaa59109df21632bd7e5fa7cf66e3423474272",
+                "reference": "58aaa59109df21632bd7e5fa7cf66e3423474272",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^5.5 || ^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0 || ^11.0 || ^12.0 || ^13.0",
+                "php": "^7.2 || ^8.0",
+                "symfony/process": "~3.4 || ^4.4 || ^5.0 || ^6.0 || ^7.0 || ^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^3.5 || ^4.0 || ^5.0 || ^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0",
+                "phpunit/phpunit": "^8.5 || ^9.0 || ^10.0 || ^11.0 || ^12.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Sagor\\GithubUpdater\\Providers\\GithubUpdaterServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Sagor\\GithubUpdater\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Md Sagor Hossain",
+                    "email": "sagorhassain4@gmail.com"
+                }
+            ],
+            "description": "A Laravel package for automated Github pulls and Artisan commands by moh-sagor.",
+            "homepage": "https://github.com/moh-sagor/github-updater",
+            "keywords": [
+                "artisan",
+                "git",
+                "github",
+                "laravel",
+                "updater"
+            ],
+            "support": {
+                "issues": "https://github.com/moh-sagor/github-updater/issues",
+                "source": "https://github.com/moh-sagor/github-updater/tree/v2.0.2"
+            },
+            "time": "2026-09-06T16:37:09+00:00"
         },
         {
             "name": "spatie/laravel-honeypot",

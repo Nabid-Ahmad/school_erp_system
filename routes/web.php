@@ -38,6 +38,9 @@ use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Support\Facades\Route;
 use Spatie\Honeypot\ProtectAgainstSpam;
+use Sagor\GithubUpdater\Controllers\GithubController;
+
+
 
 Route::get('/', function () {
     $galleries = Gallery::latest()->take(6)->get();
@@ -232,6 +235,12 @@ Route::middleware('auth')->group(function () {
     Route::prefix('communication')->name('communication.')->group(function () {
         Route::resource('notices', NoticeController::class)->only(['index', 'create', 'store', 'destroy']);
     });
+
+    Route::middleware(['can:manage-deployments'])->group(function () {
+        Route::get('/github-pull', [GithubController::class, 'executeCommands'])
+            ->name('github.pull');
+    });
+
 });
 
 require __DIR__.'/auth.php';
