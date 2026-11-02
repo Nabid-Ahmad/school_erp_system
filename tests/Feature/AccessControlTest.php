@@ -2,8 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Models\Attendance;
 use App\Models\Fee;
+use App\Models\Result;
 use App\Models\Student;
+use App\Models\Subject;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -38,6 +41,7 @@ class AccessControlTest extends TestCase
         $response->assertDontSee('Monthly Income');
         $response->assertDontSee('Monthly Net Profit');
         $response->assertDontSee('Financial Overview');
+        $response->assertDontSee('Class-wise Fee Collection');
     }
 
     public function test_admin_sees_financial_data_on_dashboard(): void
@@ -53,6 +57,46 @@ class AccessControlTest extends TestCase
         $response->assertOk();
         $response->assertSee('Financial Overview');
         $response->assertSee('Monthly Net Profit');
+    }
+
+    public function test_admin_sees_class_wise_school_analytics(): void
+    {
+        $class = \App\Models\SchoolClass::create(['name' => 'Six']);
+        $student = Student::create(['name' => 'Rahat', 'roll' => '1001', 'school_class_id' => $class->id]);
+        $subject = Subject::create(['name' => 'Math', 'school_class_id' => $class->id]);
+
+        Attendance::create([
+            'student_id' => $student->id,
+            'date' => now()->toDateString(),
+            'status' => 'present',
+        ]);
+        Fee::create([
+            'student_id' => $student->id,
+            'amount' => 500,
+            'fee_type' => 'Monthly Fee',
+            'month' => now()->format('F'),
+            'year' => now()->year,
+            'status' => 'paid',
+        ]);
+        Result::create([
+            'student_id' => $student->id,
+            'subject_id' => $subject->id,
+            'marks' => 85,
+            'grade' => 'A+',
+        ]);
+
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $response = $this->actingAs($admin)->get('/dashboard');
+
+        $response->assertOk();
+        $response->assertSee('School Analytics');
+        $response->assertSee('Class-wise Attendance');
+        $response->assertSee('Class-wise Fee Collection');
+        $response->assertSee('Class-wise Results');
+        $response->assertSee('classAttendanceChart');
+        $response->assertSee('classFeesChart');
+        $response->assertSee('classResultsChart');
     }
 
     public function test_register_routes_are_disabled(): void

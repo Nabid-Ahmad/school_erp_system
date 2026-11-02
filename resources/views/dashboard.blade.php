@@ -104,6 +104,54 @@
 
             @endif
 
+            @if($classAttendance !== null || $classFees !== null || $classResults !== null)
+            <section class="mb-10">
+                <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2 mb-6">
+                    <div>
+                        <h2 class="text-2xl font-black text-white">School Analytics</h2>
+                        <p class="text-sm font-bold text-green-100 mt-1">Class-wise overview for {{ now()->format('F Y') }}</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    @if($classAttendance !== null)
+                    <div class="bg-white p-6 rounded-3xl shadow-md border border-gray-100">
+                        <h3 class="text-lg font-black text-gray-900 mb-1">Class-wise Attendance</h3>
+                        <p class="text-xs font-bold text-gray-400 mb-5">Present rate from attendance records this month</p>
+                        @if($classAttendance->isNotEmpty())
+                            <div class="h-56"><canvas id="classAttendanceChart"></canvas></div>
+                        @else
+                            <p class="py-12 text-center text-sm font-bold text-gray-500">No attendance records for this month.</p>
+                        @endif
+                    </div>
+                    @endif
+
+                    @if($classFees !== null)
+                    <div class="bg-white p-6 rounded-3xl shadow-md border border-gray-100">
+                        <h3 class="text-lg font-black text-gray-900 mb-1">Class-wise Fee Collection</h3>
+                        <p class="text-xs font-bold text-gray-400 mb-5">Paid fees collected this month</p>
+                        @if($classFees->isNotEmpty())
+                            <div class="h-56"><canvas id="classFeesChart"></canvas></div>
+                        @else
+                            <p class="py-12 text-center text-sm font-bold text-gray-500">No fee collections for this month.</p>
+                        @endif
+                    </div>
+                    @endif
+
+                    @if($classResults !== null)
+                    <div class="bg-white p-6 rounded-3xl shadow-md border border-gray-100">
+                        <h3 class="text-lg font-black text-gray-900 mb-1">Class-wise Results</h3>
+                        <p class="text-xs font-bold text-gray-400 mb-5">Average marks across recorded results</p>
+                        @if($classResults->isNotEmpty())
+                            <div class="h-56"><canvas id="classResultsChart"></canvas></div>
+                        @else
+                            <p class="py-12 text-center text-sm font-bold text-gray-500">No results have been recorded yet.</p>
+                        @endif
+                    </div>
+                    @endif
+                </div>
+            </section>
+            @endif
+
             <!-- Quick Actions -->
             @canany(['manage students', 'manage fees'])
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
@@ -162,22 +210,24 @@
         </div>
     </div>
 
-    @if($monthlyFees !== null || $monthlyExpenses !== null)
+    @if($monthlyFees !== null || $monthlyExpenses !== null || ($classAttendance !== null && $classAttendance->isNotEmpty()) || ($classFees !== null && $classFees->isNotEmpty()) || ($classResults !== null && $classResults->isNotEmpty()))
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const ctx = document.getElementById('financialChart').getContext('2d');
-            if (ctx) {
-                new Chart(ctx, {
+            const renderBarChart = (elementId, labels, data, color, label, maxValue = undefined) => {
+                const canvas = document.getElementById(elementId);
+                if (!canvas) return;
+
+                new Chart(canvas, {
                     type: 'bar',
                     data: {
-                        labels: ['Income', 'Expenses'],
+                        labels,
                         datasets: [{
-                            label: '৳',
-                            data: [{{ $monthlyFees }}, {{ $monthlyExpenses }}],
-                            backgroundColor: ['#15803d', '#ef4444'],
+                            label,
+                            data,
+                            backgroundColor: color,
                             borderRadius: 15,
-                            barThickness: 50
+                            maxBarThickness: 50
                         }]
                     },
                     options: {
@@ -185,12 +235,57 @@
                         maintainAspectRatio: false,
                         plugins: { legend: { display: false } },
                         scales: {
-                            y: { beginAtZero: true, grid: { borderDash: [4, 4], drawBorder: false } },
+                            y: {
+                                beginAtZero: true,
+                                ...(maxValue ? { max: maxValue } : {}),
+                                grid: { borderDash: [4, 4], drawBorder: false }
+                            },
                             x: { grid: { display: false } }
                         }
                     }
                 });
-            }
+            };
+
+            @if($monthlyFees !== null || $monthlyExpenses !== null)
+            renderBarChart(
+                'financialChart',
+                ['Income', 'Expenses'],
+                [{{ $monthlyFees ?? 0 }}, {{ $monthlyExpenses ?? 0 }}],
+                ['#15803d', '#ef4444'],
+                '৳'
+            );
+            @endif
+
+            @if($classAttendance !== null && $classAttendance->isNotEmpty())
+            renderBarChart(
+                'classAttendanceChart',
+                @json($classAttendance->pluck('name')->values()),
+                @json($classAttendance->pluck('attendance_rate')->values()),
+                '#f97316',
+                'Present rate (%)',
+                100
+            );
+            @endif
+
+            @if($classFees !== null && $classFees->isNotEmpty())
+            renderBarChart(
+                'classFeesChart',
+                @json($classFees->pluck('name')->values()),
+                @json($classFees->pluck('collected_amount')->values()),
+                '#15803d',
+                'Collected (৳)'
+            );
+            @endif
+
+            @if($classResults !== null && $classResults->isNotEmpty())
+            renderBarChart(
+                'classResultsChart',
+                @json($classResults->pluck('name')->values()),
+                @json($classResults->pluck('average_marks')->map(fn ($marks) => round($marks, 1))->values()),
+                '#2563eb',
+                'Average marks'
+            );
+            @endif
         });
     </script>
     @endif

@@ -34,6 +34,7 @@ use App\Models\Event;
 use App\Models\Expense;
 use App\Models\Fee;
 use App\Models\Gallery;
+use App\Models\Result;
 use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Support\Facades\Route;
@@ -66,6 +67,53 @@ Route::get('/dashboard', function () {
             ->sum('amount')
         : null;
 
+    $monthStart = now()->startOfMonth()->toDateString();
+    $monthEnd = now()->endOfMonth()->toDateString();
+    $classAttendance = $user->can('manage attendances')
+        ? Attendance::query()
+            ->join('students', 'attendances.student_id', '=', 'students.id')
+            ->join('school_classes', 'students.school_class_id', '=', 'school_classes.id')
+            ->whereBetween('attendances.date', [$monthStart, $monthEnd])
+            ->select('school_classes.name')
+            ->selectRaw('SUM(CASE WHEN attendances.status = ? THEN 1 ELSE 0 END) as present_count', ['present'])
+            ->selectRaw('COUNT(attendances.id) as recorded_count')
+            ->groupBy('school_classes.id', 'school_classes.name')
+            ->orderBy('school_classes.name')
+            ->get()
+            ->map(function ($class) {
+                $class->attendance_rate = $class->recorded_count > 0
+                    ? round(($class->present_count / $class->recorded_count) * 100, 1)
+                    : 0;
+
+                return $class;
+            })
+        : null;
+
+    $classFees = $user->can('manage fees') || $user->role === 'admin'
+        ? Fee::query()
+            ->join('students', 'fees.student_id', '=', 'students.id')
+            ->join('school_classes', 'students.school_class_id', '=', 'school_classes.id')
+            ->where('fees.status', 'paid')
+            ->where('fees.month', now()->format('F'))
+            ->where('fees.year', (string) now()->year)
+            ->select('school_classes.name')
+            ->selectRaw('SUM(fees.amount) as collected_amount')
+            ->groupBy('school_classes.id', 'school_classes.name')
+            ->orderBy('school_classes.name')
+            ->get()
+        : null;
+
+    $classResults = $user->can('manage results')
+        ? Result::query()
+            ->join('students', 'results.student_id', '=', 'students.id')
+            ->join('school_classes', 'students.school_class_id', '=', 'school_classes.id')
+            ->select('school_classes.name')
+            ->selectRaw('AVG(results.marks) as average_marks')
+            ->groupBy('school_classes.id', 'school_classes.name')
+            ->orderBy('school_classes.name')
+            ->get()
+        : null;
+
     $audience = 'students';
     if ($user->role === 'teacher') $audience = 'teachers';
     if ($user->role === 'parent') $audience = 'parents';
@@ -78,7 +126,17 @@ Route::get('/dashboard', function () {
         $q->whereNull('expires_at')->orWhere('expires_at', '>=', now()->toDateString());
     })->latest()->take(3)->get();
 
-    return view('dashboard', compact('totalStudents', 'totalTeachers', 'todayAttendance', 'monthlyFees', 'monthlyExpenses', 'dashboardNotices'));
+    return view('dashboard', compact(
+        'totalStudents',
+        'totalTeachers',
+        'todayAttendance',
+        'monthlyFees',
+        'monthlyExpenses',
+        'classAttendance',
+        'classFees',
+        'classResults',
+        'dashboardNotices'
+    ));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Public Contact Route (Accessible without login)
